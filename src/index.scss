@@ -19,33 +19,13 @@
   src: url("./fonts/sfRounded/medium.otf") format("opentype");
 }
 
-.redBackground {
-  /* background-color:  */
-}
-
-.orangeBackground {
-
-}
-
-.blueBackground {
-
-}
-
-.grayBackground {
-
-}
 
 .wh-tile {
   width: 120px;
   height: 58px;
 }
 
-.wh-tile:hover {
-  cursor: pointer;
-}
-
 .selectedTaskCount {
-  color: "#ffffff";
   font-family: 'sfRounded';
   font-style: normal;
   font-weight: bold;
