@@ -1,6 +1,7 @@
 import React from 'react';
 import 'tailwindcss/tailwind.css';
 import Tile from './Tile.js';
+import { db } from './FirebaseConfig';
 
 class NavBar extends React.Component {
   constructor() {
@@ -12,6 +13,17 @@ class NavBar extends React.Component {
       allTasks: 15,
       flaggedTasks: 30
     }
+
+    db.collection('lists').doc('listName').get().then(function(doc) {
+      if (doc.exists) {
+          console.log("Document data:", doc.data());
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  });
 
     this.handler = this.handler.bind(this)
   }
