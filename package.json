@@ -47,7 +47,8 @@
     "electron": "^11.1.0",
     "husky": "^5.0.6",
     "lint-staged": "^10.5.3",
-    "prettier": "2.2.1"
+    "prettier": "2.2.1",
+    "uuid": "^8.3.2"
   },
   "husky": {
     "hooks": {

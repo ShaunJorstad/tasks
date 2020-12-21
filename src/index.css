@@ -3,40 +3,40 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "sfRounded";
+  font-family: "sfRounded-light";
+  font-style: thin;
   font-weight: 300;
   src: url("./fonts/sfRounded/light.otf") format("opentype");
 }
 @font-face {
-  font-family: "sfRounded";
+  font-family: "sfRounded-regular";
   font-weight: 400;
   src: url("./fonts/sfRounded/regular.otf") format("opentype");
 }
 @font-face {
-  font-family: "sfRounded";
+  font-family: "sfRounded-medium";
   font-style: medium;
   font-weight: 500;
   src: url("./fonts/sfRounded/medium.otf") format("opentype");
 }
 
-.redBackground {
-  /* background-color:  */
+.textWhite {
+  color: "#ffffff";
 }
 
-.orangeBackground {
-
-}
-
-.blueBackground {
-
-}
-
-.grayBackground {
-
+.h-lists {
+  min-height: 60%;
+  max-height: 60%;
+  overflow: scroll;
 }
 
 .wh-tile {
   width: 120px;
+  height: 58px;
+}
+
+.wh-tile-double {
+  width: 280px;
   height: 58px;
 }
 
@@ -46,7 +46,7 @@
 
 .selectedTaskCount {
   color: "#ffffff";
-  font-family: 'sfRounded';
+  font-family: 'sfRounded-regular';
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -56,7 +56,7 @@
 
 .unselectedTaskCount {
   color: "#5C6269";
-  font-family: 'sfRounded';
+  font-family: 'sfRounded-regular';
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -65,17 +65,27 @@
 }
 
 .unselectedTitle {
-  font-family: "sfRounded";
+  font-family: "sfRounded-regular";
   font-style: normal;
-  font-weight: 500;
   font-size: 15px;
   line-height: 18px;
 }
 
 .selectedTitle {
-  font-family: "sfRounded";
+  font-family: "sfRounded-regular";
   font-style: normal;
-  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.selectedList {
+  font-family: "sfRounded-regular";
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.newListButton {
+  font-family: "sfRounded-regular";  
   font-size: 15px;
   line-height: 18px;
 }
