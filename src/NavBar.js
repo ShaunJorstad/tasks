@@ -15,7 +15,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    let listTiles = Object.values(this.props.lists).map(list =>
+    let listTiles = Object.values(this.props.lists).filter(list => list.id !== 0).map(list => 
       <ListTile
         key={list.id}
         list={list}
@@ -51,7 +51,7 @@ class NavBar extends React.Component {
             {listTiles}
           </div>
           <div className="flex items-center cursor-pointer">
-            <p className="select-none place-self-center text-center pl-2 pt-4 newListButton text-gray" onClick={() => {this.props.createList()}}>+ Add List</p>
+            <p className="select-none place-self-center text-center pl-2 pt-4 newListButton text-gray" onClick={() => { this.props.createList() }}>+ Add List</p>
           </div>
         </div>
       </div>

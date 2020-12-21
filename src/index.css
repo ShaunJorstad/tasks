@@ -46,7 +46,7 @@
 
 .selectedTaskCount {
   color: "#ffffff";
-  font-family: 'sfRounded-regular';
+  font-family: "sfRounded-regular";
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -56,7 +56,7 @@
 
 .unselectedTaskCount {
   color: "#5C6269";
-  font-family: 'sfRounded-regular';
+  font-family: "sfRounded-regular";
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -85,9 +85,16 @@
 }
 
 .newListButton {
-  font-family: "sfRounded-regular";  
+  font-family: "sfRounded-regular";
   font-size: 15px;
   line-height: 18px;
+}
+
+.listTitle {
+  font-family: 'sfRounded-medium';
+  font-weight: bold;
+  font-size: 35px;
+  line-height: 42px;
 }
 
 @layer utilities {

@@ -23,6 +23,10 @@ export function getLists() {
             lists.forEach((list) => {
                 tmplists[list.data().config.id] = new List(list.data());
             });
+            tmplists.today = new List({ config: {name: 'today', color: 'blue', order: -1, id: 0 }, taskCount: 0, sections: { default: {order: 0, tasks: {}}}})
+            tmplists.upcoming = new List({ config: {name: 'upcoming', color: 'blue', order: -1, id: 0 }, taskCount: 0, sections: { default: {order: 0, tasks: {}}}})
+            tmplists.all = new List({ config: {name: 'all', color: 'blue', order: -1, id: 0 }, taskCount: 0, sections: { default: {order: 0, tasks: {}}}})
+            
             allLists = tmplists;
             resolve(allLists);
         }).catch(function (error) {
@@ -34,8 +38,8 @@ export function getLists() {
 export function getCounts() {
     if (allLists != null) {
         allLists.forEach((list) => {
-            
-        }); 
+
+        });
     }
     return getLists().then((result) => {
         getCounts();
@@ -63,11 +67,11 @@ export function createList(config) {
         taskCount: 0,
         sections: {
             default: {
-                order: 0, 
+                order: 0,
                 tasks: {}
             },
             second: {
-                order: 1, 
+                order: 1,
                 tasks: {}
             }
         }
@@ -97,8 +101,8 @@ export function editTask(task) {
 
 export function testConnection() {
     createList({
-        name: 'yet another list!', 
-        order: 0, 
+        name: 'yet another list!',
+        order: 0,
         color: 'blue'
     });
 }
