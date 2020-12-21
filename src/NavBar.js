@@ -24,7 +24,7 @@ class NavBar extends React.Component {
         selectNewList={this.props.selectNewList} />)
 
     return (
-      <div className="bg-navBackground h-full w-372">
+      <div className="bg-navBackground h-full w-372 transition-all duration-700 ease-in-out dynamicNav">
         <div className="px-2 h-full">
           <input className="w-full mt-9 py-1 bg-tileUnselected border-tileUnselectedBorder border-2 px-3 rounded-md text-sm" type="text" id="searchBar" placeholder="search"></input>
           <div className="grid mt-5 grid-cols-2 gap-x-3 gap-y-3">

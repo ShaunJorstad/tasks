@@ -15,7 +15,7 @@ class Content extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.selectedList !== this.props.selectedList && ['today', 'all', 'upcoming'].includes(this.props.selectedList)) {
-      this.setState({ 
+      this.setState({
         filter: 'all',
         view: 'list'
       })
@@ -23,7 +23,11 @@ class Content extends React.Component {
   }
 
   updateFilter(newFilter) {
-    this.setState({ filter: newFilter });
+    if (this.state.view === 'config') {
+      this.setState({filter: newFilter, view: 'list'})
+    } else {
+      this.setState({ filter: newFilter });
+    }
   }
 
   updateView(newView) {
@@ -31,18 +35,18 @@ class Content extends React.Component {
   }
 
   renderContents() {
-    switch(this.state.view) {
-      case "config": 
+    switch (this.state.view) {
+      case "config":
         return (
           <Config
             lists={this.props.lists}
             selectedList={this.props.selectedList}
             updateListName={this.props.updateListName}
             updateListColor={this.props.updateListColor}
-            deleteList={this.props.deleteList}/>
+            deleteList={this.props.deleteList} />
         );
       case "list":
-        switch(this.state.filter) {
+        switch (this.state.filter) {
           case "all":
             return ('all')
           case 'today':
@@ -52,7 +56,7 @@ class Content extends React.Component {
           default:
             return 'error'
         }
-        return ('list'); 
+        return ('list');
       case "calendar":
         return ('calendar')
       default:
@@ -78,7 +82,7 @@ class Content extends React.Component {
             updateFilter={this.updateFilter}
             updateView={this.updateView} />
           <div>
-            {this.renderContents()} 
+            {this.renderContents()}
           </div>
         </div>
       </div>

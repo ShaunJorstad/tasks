@@ -9,8 +9,8 @@ module.exports = {
         dark: '#E5E5E4'
       },
       tileUnselected: {
-        light: '#CACBCB',
-        DEFAULT: '#CACBCB',
+        light: '#CFCECD',
+        DEFAULT: '#CFCECD',
         dark: '#CFCFCE'
       },
       tileSelected: {

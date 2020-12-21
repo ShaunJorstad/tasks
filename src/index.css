@@ -76,7 +76,7 @@ body {
 }
 
 .unselectedTitle {
-  font-family: "sfRounded-regular";
+  font-family: "sfRounded-medium";
   font-style: normal;
   font-size: 15px;
   line-height: 18px;
@@ -84,7 +84,6 @@ body {
 
 .selectedTitle {
   font-family: "sfRounded-regular";
-  font-style: normal;
   font-size: 15px;
   line-height: 18px;
 }
@@ -134,6 +133,20 @@ body {
   line-height: 24px;
 }
 
+@media only screen and (max-width: 900px) {
+  .dynamicNav {
+    position: relative;
+    margin-left: -230px;
+    background-color: white;
+  }
+  
+  .dynamicNav:hover {
+    /* left:0px; */
+    margin-left: 0px;
+  }
+}
+
+
 input:focus,
 select:focus,
 textarea:focus,
@@ -144,6 +157,9 @@ button:focus {
 @layer utilities {
   .w-372 {
     min-width: 271px;
+  }
+  .w-200 {
+    min-width: 200px;
   }
 }
 

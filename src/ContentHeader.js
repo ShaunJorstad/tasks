@@ -15,7 +15,7 @@ class ContentHeader extends React.Component {
 
     renderTitle() {
         return (
-            <p className={`listTitle text-${this.getList().color} select-none`}>{this.getList().name}</p>
+            <p className={`col-span-2 listTitle text-${this.getList().color} select-none`}>{this.getList().name}</p>
         );
     }
 
@@ -46,11 +46,11 @@ class ContentHeader extends React.Component {
             return (<div></div>);
         }
         return (
-            <div className="mt-7 grid grid-cols-3">
+            <div className="mt-7 grid grid-cols-7">
                 {this.renderTitle()}
                 {this.getList().id !== 0 ?
-                    <div className="grid grid-cols-2 gap-x-2">
-                        <div id="filterControls" className="inline-block align-middle mt-2">
+                    <div className="col-span-4 grid grid-cols-2 gap-x-2 ">
+                        <div id="filterControls" className="inline-block justify-self-end mr-3  mt-2">
                             <div
                                 className={`${this.renderFilterBackground('all')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
                                 onClick={() => { this.props.updateFilter('all') }}>

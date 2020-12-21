@@ -43,7 +43,7 @@ class Config extends React.Component {
     }
 
     processColorChange(val) {
-        this.setState({ 
+        this.setState({
             colorInput: val
         })
         if (!['green', 'blue', 'teal', 'pink', 'purple', 'orange'].includes(val)) {
@@ -56,6 +56,25 @@ class Config extends React.Component {
             })
             this.props.updateListColor(val, this.getList().id)
         }
+    }
+
+    renderColorOptions() {
+        return (
+            <div className="col-span-3 grid grid-cols-6 ">
+                <div className="h-10 w-10 rounded-lg bg-pink transition-all duration-300 ease-in-out transform hover:scale-125"
+                    onClick={() => { this.processColorChange('pink') }}></div>
+                <div className="h-10 w-10 rounded-lg bg-blue transition-all duration-300 ease-in-out transform hover:scale-125"
+                    onClick={() => { this.processColorChange('blue') }}></div>
+                <div className="h-10 w-10 rounded-lg bg-purple transition-all duration-300 ease-in-out transform hover:scale-125"
+                    onClick={() => { this.processColorChange('purple') }}></div>
+                <div className="h-10 w-10 rounded-lg bg-orange transition-all duration-300 ease-in-out transform hover:scale-125"
+                    onClick={() => { this.processColorChange('orange') }}></div>
+                <div className="h-10 w-10 rounded-lg bg-teal transition-all duration-300 ease-in-out transform hover:scale-125"
+                    onClick={() => { this.processColorChange('teal') }}></div>
+                <div className="h-10 w-10 rounded-lg bg-green transition-all duration-300 ease-in-out transform hover:scale-125"
+                    onClick={() => { this.processColorChange('green') }}></div>
+            </div>
+        )
     }
 
 
@@ -79,7 +98,7 @@ class Config extends React.Component {
 
     renderDeleteButton() {
         return (
-            <div className="select-none cursor-pointer bg-lightRed text-red col-span-3 px-4 py-4 rounded-lg mt-48 flex justify-center" onClick={() => {this.props.deleteList(this.getList().id)}}>
+            <div className="select-none cursor-pointer bg-lightRed text-red col-span-3 px-4 py-4 rounded-lg mt-48 flex justify-center" onClick={() => { this.props.deleteList(this.getList().id) }}>
                 <p className="">delete</p>
             </div>
         )
@@ -95,7 +114,8 @@ class Config extends React.Component {
                 <div className="configLabel">
                     <p>Color</p>
                 </div>
-                {this.renderColorInput()}
+                {/* {this.renderColorInput()} */}
+                {this.renderColorOptions()}
                 <div></div>
                 {this.renderDeleteButton()}
             </div>
