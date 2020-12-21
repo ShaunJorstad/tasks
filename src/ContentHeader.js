@@ -15,7 +15,7 @@ class ContentHeader extends React.Component {
 
     renderTitle() {
         return (
-            <p className="listTitle text-blue select-none">{this.getList().name}</p>
+            <p className={`listTitle text-${this.getList().color} select-none`}>{this.getList().name}</p>
         );
     }
 
@@ -25,19 +25,19 @@ class ContentHeader extends React.Component {
                 {this.props.view === "list" ?
                     <p className="inline-block align-middle select-none text-right addTaskButton text-gray pr-2">+</p> :
                     <div></div>}
-                <p className="inline-block align-middle select-none text-right taskCount text-blue">{this.getList().taskCount}</p>
+                <p className={`inline-block align-middle select-none text-right taskCount text-${this.getList().color}`}>{this.getList().taskCount}</p>
             </div>)
     }
 
     renderFilterBackground(currentFilter) {
         if (this.props.filter === currentFilter) {
-            return ("bg-blue text-white")
+            return (`bg-${this.getList().color} text-white`)
         }
     }
 
     renderViewBackground(currentView) {
         if (this.props.view === currentView) {
-            return ("bg-blue text-white")
+            return (`bg-${this.getList().color} text-white`)
         }
     }
 

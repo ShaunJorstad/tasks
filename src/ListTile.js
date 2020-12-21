@@ -2,6 +2,11 @@ import React from 'react';
 import 'tailwindcss/tailwind.css';
 import './index.css';
 import blueLogo from './icons/listIcons/blue.svg';
+import greenLogo from './icons/listIcons/green.svg';
+import orangeLogo from './icons/listIcons/orange.svg';
+import pinkLogo from './icons/listIcons/pink.svg';
+import purpleLogo from './icons/listIcons/purple.svg';
+import tealLogo from './icons/listIcons/teal.svg';
 
 class ListTile extends React.Component {
 
@@ -19,6 +24,36 @@ class ListTile extends React.Component {
 
     renderIcon() {
         switch (this.props.list.color) {
+            case "purple":
+                return (
+                    <div className="">
+                        <img src={purpleLogo} width="24" height="24" alt="purple" />
+                    </div>
+                );
+            case "pink":
+                return (
+                    <div className="">
+                        <img src={pinkLogo} width="24" height="24" alt="pink" />
+                    </div>
+                );
+            case "orange":
+                return (
+                    <div className="">
+                        <img src={orangeLogo} width="24" height="24" alt="orange" />
+                    </div>
+                );
+            case "green":
+                return (
+                    <div className="">
+                        <img src={greenLogo} width="24" height="24" alt="teal" />
+                    </div>
+                );
+            case "teal":
+                return (
+                    <div className="">
+                        <img src={tealLogo} width="24" height="24" alt="teal" />
+                    </div>
+                );
             case "blue":
                 return (
                     <div className="">

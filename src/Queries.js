@@ -46,12 +46,8 @@ export function getCounts() {
     });
 }
 
-export function getList(listName) {
-
-}
-
-export function removeList(listName) {
-
+export function removeList(listId) {
+    db.collection('lists').doc(listId).delete()
 }
 
 /**
@@ -85,6 +81,19 @@ export function createList(config) {
 export function updateListConfig(listName, config) {
 
 }
+
+export function changeListName(newName, listId) {
+    db.collection("lists").doc(listId).update({
+        "config.name": newName
+    })
+}
+
+export function changeListColor(newColor, listId) {
+    db.collection("lists").doc(listId).update({
+        "config.color": newColor
+    })
+}
+
 
 // Task Management
 export function createTask(task) {

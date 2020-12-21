@@ -115,19 +115,31 @@ body {
 }
 
 .taskCount {
-  font-family: 'sfRounded-regular';
+  font-family: "sfRounded-regular";
   font-weight: 300;
   font-size: 40px;
   line-height: 48px;
 }
 
 .addTaskButton {
-  font-family: 'sfRounded-regular';
+  font-family: "sfRounded-regular";
   font-weight: 300;
   font-size: 25px;
   line-height: 30px;
 }
 
+.configLabel {
+  font-family: 'sfRounded-regular';
+  font-size: 20px;
+  line-height: 24px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
 
 @layer utilities {
   .w-372 {
@@ -138,13 +150,13 @@ body {
 body {
   margin: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', */
-    /* 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', */
-    /* sans-serif; */
+  /* 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', */
+  /* sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

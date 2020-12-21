@@ -4,7 +4,7 @@ import NavBar from './NavBar.js';
 import Content from './Content.js';
 import 'tailwindcss/tailwind.css';
 import { Task, List, Lists } from './DataStructures.js';
-import { getLists, createList, testConnection } from './Queries.js';
+import { getLists, changeListName, changeListColor, removeList, createList, testConnection } from './Queries.js';
 
 class App extends React.Component {
   constructor() {
@@ -21,8 +21,42 @@ class App extends React.Component {
     }
     // testConnection();
     this.selectNewList = this.selectNewList.bind(this)
+    this.updateListName = this.updateListName.bind(this)
+    this.updateListColor = this.updateListColor.bind(this)
+    this.deleteList = this.deleteList.bind(this)
     this.createList = this.createList.bind(this)
   }
+
+  updateListName(newName, listId) {
+    let updatedLists = this.state.lists
+    updatedLists[listId].name = newName
+    this.setState({
+      lists: updatedLists
+    })
+    changeListName(newName, listId)
+  }
+
+  updateListColor(newColor, listId) {
+    let updatedLists = this.state.lists
+    updatedLists[listId].color = newColor
+    this.setState({
+      lists: updatedLists
+    })
+    changeListColor(newColor, listId)
+  }
+
+  deleteList(listId) {
+    let updatedLists = this.state.lists
+    delete updatedLists[listId]
+    console.log(updatedLists)
+    this.setState({
+      selectedList: 'today',
+      lists: updatedLists
+    })
+    removeList(listId)
+  }
+
+
 
   selectNewList = (listName) => {
     this.setState({
@@ -33,8 +67,8 @@ class App extends React.Component {
   createList() {
     let newList = createList({
       name: 'new list',
-      color: 'blue', 
-      order: Object.values(this.state.lists).length -2
+      color: 'blue',
+      order: Object.values(this.state.lists).length - 2
     })
     let updatedLists = this.state.lists
     updatedLists[newList.id] = newList
@@ -65,7 +99,10 @@ class App extends React.Component {
         />
         <Content
           selectedList={this.state.selectedList}
-          lists={this.state.lists} />
+          lists={this.state.lists}
+          updateListName={this.updateListName}
+          updateListColor={this.updateListColor} 
+          deleteList={this.deleteList}/>
       </div>
     );
   }

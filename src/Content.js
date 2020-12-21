@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentHeader from './ContentHeader';
+import Config from './Config.js';
 
 class Content extends React.Component {
   constructor(props) {
@@ -10,6 +11,15 @@ class Content extends React.Component {
     }
     this.updateFilter = this.updateFilter.bind(this);
     this.updateView = this.updateView.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectedList !== this.props.selectedList && ['today', 'all', 'upcoming'].includes(this.props.selectedList)) {
+      this.setState({ 
+        filter: 'all',
+        view: 'list'
+      })
+    }
   }
 
   updateFilter(newFilter) {
@@ -23,7 +33,14 @@ class Content extends React.Component {
   renderContents() {
     switch(this.state.view) {
       case "config": 
-        return ('config');
+        return (
+          <Config
+            lists={this.props.lists}
+            selectedList={this.props.selectedList}
+            updateListName={this.props.updateListName}
+            updateListColor={this.props.updateListColor}
+            deleteList={this.props.deleteList}/>
+        );
       case "list":
         switch(this.state.filter) {
           case "all":

@@ -14,6 +14,7 @@ class NavBar extends React.Component {
     }
   }
 
+
   render() {
     let listTiles = Object.values(this.props.lists).filter(list => list.id !== 0).sort((a, b) => {return a.order - b.order}).map(list => 
       <ListTile
