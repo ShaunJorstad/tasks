@@ -15,8 +15,30 @@ class ContentHeader extends React.Component {
 
     renderTitle() {
         return (
-            <p className="listTitle text-blue">{this.getList().name}</p>
+            <p className="listTitle text-blue select-none">{this.getList().name}</p>
         );
+    }
+
+    renderTaskCount() {
+        return (
+            <div className="inline-block align-middle mt-2 align-right place-self-end pr-3">
+                {this.props.view === "list" ?
+                    <p className="inline-block align-middle select-none text-right addTaskButton text-gray pr-2">+</p> :
+                    <div></div>}
+                <p className="inline-block align-middle select-none text-right taskCount text-blue">{this.getList().taskCount}</p>
+            </div>)
+    }
+
+    renderFilterBackground(currentFilter) {
+        if (this.props.filter === currentFilter) {
+            return ("bg-blue text-white")
+        }
+    }
+
+    renderViewBackground(currentView) {
+        if (this.props.view === currentView) {
+            return ("bg-blue text-white")
+        }
     }
 
     render() {
@@ -24,8 +46,40 @@ class ContentHeader extends React.Component {
             return (<div></div>);
         }
         return (
-            <div className="mt-7">
+            <div className="mt-7 grid grid-cols-3">
                 {this.renderTitle()}
+                {this.getList().id !== 0 ?
+                    <div className="grid grid-cols-2 gap-x-2">
+                        <div id="filterControls" className="inline-block align-middle mt-2">
+                            <div
+                                className={`${this.renderFilterBackground('all')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
+                                onClick={() => { this.props.updateFilter('all') }}>
+                                All</div>
+                            <div
+                                className={`${this.renderFilterBackground('today')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
+                                onClick={() => { this.props.updateFilter('today') }}>
+                                Today</div>
+                            <div
+                                className={`${this.renderFilterBackground('upcoming')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
+                                onClick={() => { this.props.updateFilter('upcoming') }}>
+                                Upcoming</div>
+                        </div>
+                        <div id="viewControls" className="inline-block align-middle mt-2">
+                            <div
+                                className={`${this.renderViewBackground('config')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
+                                onClick={() => { this.props.updateView('config') }}>
+                                config</div>
+                            <div
+                                className={`${this.renderViewBackground('list')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
+                                onClick={() => { this.props.updateView('list') }}>
+                                list</div>
+                            <div
+                                className={`${this.renderViewBackground('calendar')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
+                                onClick={() => { this.props.updateView('calendar') }}>
+                                calendar</div>
+                        </div>
+                    </div> : <div></div>}
+                {this.renderTaskCount()}
             </div>
         );
     }

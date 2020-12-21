@@ -34,7 +34,7 @@ class App extends React.Component {
     let newList = createList({
       name: 'new list',
       color: 'blue', 
-      order: Object.values(this.state.lists).length
+      order: Object.values(this.state.lists).length -2
     })
     let updatedLists = this.state.lists
     updatedLists[newList.id] = newList

@@ -11,7 +11,7 @@ class ListTile extends React.Component {
 
     renderTitle() {
         return (
-            <div className={`col-span-6 whitespace-nowrap select-none overflow-scroll list ${(this.isSelected() ? 'text-white' :'text-gray')}`} >
+            <div className={`col-span-6 whitespace-nowrap select-none overflow:hidden list ${(this.isSelected() ? 'text-white' :'text-gray')}`} >
                 <p className="align-middle">{this.props.list.name}</p>
             </div>
         )
