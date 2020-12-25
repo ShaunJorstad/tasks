@@ -1,6 +1,7 @@
 import React from 'react';
 import ContentHeader from './ContentHeader';
-import Config from './Config.js';
+import Config from '../Config.js';
+import ListAll from './ListAll.js';
 
 class Content extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class Content extends React.Component {
 
   updateFilter(newFilter) {
     if (this.state.view === 'config') {
-      this.setState({filter: newFilter, view: 'list'})
+      this.setState({ filter: newFilter, view: 'list' })
     } else {
       this.setState({ filter: newFilter });
     }
@@ -48,7 +49,12 @@ class Content extends React.Component {
       case "list":
         switch (this.state.filter) {
           case "all":
-            return ('all')
+            return <ListAll
+              lists={this.props.lists} 
+              selectedList={this.props.selectedList}
+              editTask={this.props.editTask}
+              createTask={this.props.createTask}
+              completeTask={this.props.completeTask}/>
           case 'today':
             return ('today')
           case 'upcoming':
@@ -80,8 +86,9 @@ class Content extends React.Component {
             filter={this.state.filter}
             view={this.state.view}
             updateFilter={this.updateFilter}
-            updateView={this.updateView} />
-          <div>
+            updateView={this.updateView} 
+            createTask={this.props.createTask}/>
+          <div className="h-5/6">
             {this.renderContents()}
           </div>
         </div>

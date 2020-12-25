@@ -23,7 +23,9 @@ class ContentHeader extends React.Component {
         return (
             <div className="inline-block align-middle mt-2 align-right place-self-end pr-3">
                 {this.props.view === "list" ?
-                    <p className="inline-block align-middle select-none text-right addTaskButton text-gray pr-2">+</p> :
+                    <p
+                        className="inline-block align-middle cursor-pointer select-none text-right addTaskButton text-gray pr-2"
+                        onClick={() => {this.props.createTask(this.getList().id, 'default')}}>+</p> :
                     <div></div>}
                 <p className={`inline-block align-middle select-none text-right taskCount text-${this.getList().color}`}>{this.getList().taskCount}</p>
             </div>)
@@ -78,7 +80,7 @@ class ContentHeader extends React.Component {
                                 onClick={() => { this.props.updateView('calendar') }}>
                                 calendar</div>
                         </div>
-                    </div> : <div></div>}
+                    </div> : <div className="col-span-4"></div>}
                 {this.renderTaskCount()}
             </div>
         );

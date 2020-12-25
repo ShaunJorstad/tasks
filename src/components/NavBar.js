@@ -1,7 +1,7 @@
 import React from 'react';
 import 'tailwindcss/tailwind.css';
 import Tile from './Tile.js';
-import { db } from './FirebaseConfig';
+import { db } from '../FirebaseConfig';
 import ListTile from './ListTile.js';
 class NavBar extends React.Component {
   constructor(props) {

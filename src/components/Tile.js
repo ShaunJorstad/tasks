@@ -1,10 +1,10 @@
 import React from 'react';
 import 'tailwindcss/tailwind.css';
-import todayLogo from './icons/today.svg';
-import allLogo from './icons/all.svg';
-import upcomingLogo from './icons/upcoming.svg';
-import flaggedLogo from './icons/flagged.svg';
-import './index.css';
+import todayLogo from '../icons/today.svg';
+import allLogo from '../icons/all.svg';
+import upcomingLogo from '../icons/upcoming.svg';
+import flaggedLogo from '../icons/flagged.svg';
+import '../index.css';
 
 class Tile extends React.Component {
     renderIcon() {

@@ -1,14 +1,15 @@
 import React from 'react';
 import 'tailwindcss/tailwind.css';
-import './index.css';
-import blueLogo from './icons/listIcons/blue.svg';
-import greenLogo from './icons/listIcons/green.svg';
-import orangeLogo from './icons/listIcons/orange.svg';
-import pinkLogo from './icons/listIcons/pink.svg';
-import purpleLogo from './icons/listIcons/purple.svg';
-import tealLogo from './icons/listIcons/teal.svg';
+import '../index.css';
+import blueLogo from '../icons/listIcons/blue.svg';
+import greenLogo from '../icons/listIcons/green.svg';
+import orangeLogo from '../icons/listIcons/orange.svg';
+import pinkLogo from '../icons/listIcons/pink.svg';
+import purpleLogo from '../icons/listIcons/purple.svg';
+import tealLogo from '../icons/listIcons/teal.svg';
 
 class ListTile extends React.Component {
+
 
     isSelected() {
         return this.props.selectedList === this.props.list.id
@@ -16,7 +17,7 @@ class ListTile extends React.Component {
 
     renderTitle() {
         return (
-            <div className={`col-span-6 whitespace-nowrap select-none overflow:hidden list ${(this.isSelected() ? 'text-white' :'text-gray')}`} >
+            <div className={`col-span-6 whitespace-nowrap select-none overflow:hidden list ${(this.isSelected() ? 'text-white' : 'text-gray')}`} >
                 <p className="align-middle">{this.props.list.name}</p>
             </div>
         )
@@ -67,7 +68,7 @@ class ListTile extends React.Component {
 
     renderTaskCount() {
         return (
-            <p className={`text-right select-none px-2 list ${(this.isSelected() ? 'text-white' :'text-gray')}`}>{this.props.list.taskCount}</p>
+            <p className={`text-right select-none px-2 list ${(this.isSelected() ? 'text-white' : 'text-gray')}`}>{this.props.list.taskCount}</p>
         );
     }
 
@@ -80,8 +81,8 @@ class ListTile extends React.Component {
     render() {
         return (
             <div
-                className={`py-1 select-none transition-all duration-200 ease-in-out ${this.renderBackground()}`}
-                onClick={() => {this.props.selectNewList(this.props.list.id)}}>
+                className={`cursor-pointer py-1 select-none transition-all duration-200 ease-in-out ${this.renderBackground()}`}
+                onClick={() => { this.props.selectNewList(this.props.list.id) }}>
                 <div className="grid grid-cols-8 auto-cols-min pl-2">
                     {this.renderIcon()}
                     {this.renderTitle()}

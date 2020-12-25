@@ -1,10 +1,10 @@
 import './App.css';
 import React from 'react';
-import NavBar from './NavBar.js';
-import Content from './Content.js';
+import NavBar from './components/NavBar.js';
+import Content from './components/Content.js';
 import 'tailwindcss/tailwind.css';
 import { Task, List, Lists } from './DataStructures.js';
-import { getLists, changeListName, changeListColor, removeList, createList, testConnection } from './Queries.js';
+import { getLists, updateTask, changeListName, changeListColor, removeList, fcreateList, fireCreateTask, testConnection, fcompleteTask } from './Queries.js';
 
 class App extends React.Component {
   constructor() {
@@ -19,12 +19,40 @@ class App extends React.Component {
     if (Object.keys(this.state.lists).length === 0) {
       this.constructLists();
     }
-    // testConnection();
     this.selectNewList = this.selectNewList.bind(this)
     this.updateListName = this.updateListName.bind(this)
     this.updateListColor = this.updateListColor.bind(this)
     this.deleteList = this.deleteList.bind(this)
     this.createList = this.createList.bind(this)
+    this.editTask = this.editTask.bind(this)
+    this.createTask = this.createTask.bind(this)
+    this.completeTask = this.completeTask.bind(this)
+  }
+
+  completeTask(listId, sectionName, taskId) {
+    let updatedLists = this.state.lists
+    updatedLists[listId].completeTask(sectionName, taskId)
+    this.setState({lists: updatedLists})
+    fcompleteTask(listId, sectionName, taskId)
+  }
+
+  createTask(listId, sectionName) {
+    let updatedLists = this.state.lists
+    let task = updatedLists[listId].createTask(listId, sectionName)
+    this.setState({ lists: updatedLists })
+    fireCreateTask(listId, sectionName, task)
+  }
+
+  editTask(listId, sectionName, taskId, taskData, publish = false) {
+    if (publish) {
+      // push to firestore
+      let taskObject = this.state.lists[listId].sections[sectionName].tasks[taskId].toObject()
+      updateTask(listId, sectionName, taskId, taskObject)
+      return
+    }
+    let updatedLists = this.state.lists
+    updatedLists[listId].sections[sectionName].tasks[taskId].update(taskData)
+    this.setState({ lists: updatedLists })
   }
 
   updateListName(newName, listId) {
@@ -56,8 +84,6 @@ class App extends React.Component {
     removeList(listId)
   }
 
-
-
   selectNewList = (listName) => {
     this.setState({
       selectedList: listName
@@ -65,7 +91,7 @@ class App extends React.Component {
   }
 
   createList() {
-    let newList = createList({
+    let newList = fcreateList({
       name: 'new list',
       color: 'blue',
       order: Object.values(this.state.lists).length - 2
@@ -101,8 +127,11 @@ class App extends React.Component {
           selectedList={this.state.selectedList}
           lists={this.state.lists}
           updateListName={this.updateListName}
-          updateListColor={this.updateListColor} 
-          deleteList={this.deleteList}/>
+          updateListColor={this.updateListColor}
+          deleteList={this.deleteList}
+          editTask={this.editTask}
+          createTask={this.createTask} 
+          completeTask={this.completeTask}/>
       </div>
     );
   }
