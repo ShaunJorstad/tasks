@@ -20,6 +20,26 @@
   src: url("./fonts/sfRounded/medium.otf") format("opentype");
 }
 
+.text-sfRegular {
+  font-family: 'sfRounded-regular'
+}
+
+.text-14 {
+  font-size: 14px;
+}
+
+.text-13 {
+  font-size: 13px;
+}
+
+.mt-03 {
+  margin-top: -20px;
+}
+
+textarea {
+  resize: none
+}
+
 body {
   overflow: hidden;
 }

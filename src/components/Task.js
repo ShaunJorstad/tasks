@@ -1,9 +1,11 @@
 import React from 'react';
+import AnimateHeight from 'react-animate-height';
 
 class Task extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            textBoxHeight: 'auto'
         }
     }
 
@@ -31,40 +33,66 @@ class Task extends React.Component {
     renderTaskContent() {
         return (
             <input
-                className="col-span-11"
+                className="col-span-11 text-sfRegular text-14"
                 type='text'
+                placeholder="task content"
                 value={this.props.content}
                 onChange={val => { this.props.editTask(this.getList().id, 'default', this.props.task.id, { content: val.target.value }) }} />
         )
     }
 
     renderNotes() {
-        if (this.props.activeTask == this.props.task.id) {
-            return (<div>notes</div>)
-        }
         return (
-            <div></div>
+            <div className={`col-span-11 `}>
+                <AnimateHeight
+                    duration={500}
+                    height={this.props.activeTask === this.props.task.id ? 'auto' : '0'}
+                >
+                    <textarea
+                        className={`
+                            w-full text-sfRegular text-13 transition-all duration-700 ease-in-out
+                            opacity-50
+                        `}
+                        type='text'
+                        placeholder="notes"
+                        value={this.props.task.description}
+                        onChange={val => { this.props.editTask(this.getList().id, 'default', this.props.task.id, { description: val.target.value }) }} />
+                </AnimateHeight>
+            </div>
+
         )
     }
 
     renderDate() {
-        if (this.props.activeTask == this.props.task.id) {
-            return (<div>date</div>)
-        }
         return (
-            <div></div>
+            <div className={`col-span-11`}>
+                <AnimateHeight
+                    duration={500}
+                    height={this.props.activeTask === this.props.task.id ? 'auto' : '0'}
+                >
+                    date
+                </AnimateHeight>
+            </div>
         )
     }
+
 
     render() {
         return (
             <div
-                className="grid grid-cols-12 w-full"
+                className="grid grid-cols-12 w-full gap-y-2"
                 onClick={() => { this.props.selectNewTask(this.props.id) }}>
                 {this.renderCheckCircle()}
                 {this.renderTaskContent()}
+                <div className="h-0"></div>
                 {this.renderNotes()}
+                <div className="h-0"></div>
                 {this.renderDate()}
+                <div className="h-0"></div>
+                <hr className={`
+                    col-span-11 opacity-10 mb-2
+                    ${this.props.activeTask === this.props.task.id ? '' : 'mt-03'}
+                `} />
             </div>
         );
     }
