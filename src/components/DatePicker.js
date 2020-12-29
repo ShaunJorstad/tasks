@@ -19,6 +19,12 @@ class DatePicker extends React.Component {
         }
     }
 
+    generateDateFromToday(dayOffset) {
+        let date = new Date(this.TODAY)
+        date.setDate(this.TODAY.getDate() + dayOffset)
+        return date
+    }
+
     calcDayDifference(day) {
         return Math.ceil((day.getTime() - this.TODAY.getTime()) / (1000 * 3600 * 24))
     }
@@ -28,7 +34,6 @@ class DatePicker extends React.Component {
         if (this.props.task.due) {
             let parsedDate = this.props.task.due.toLocaleDateString("en-US").split("/")
             dateString = parsedDate[0] + "/" + parsedDate[1]
-            console.log("date difference")
             let offset = this.calcDayDifference(this.props.task.due)
             if (offset >= 0) {
                 if (offset === 0) {
@@ -36,7 +41,9 @@ class DatePicker extends React.Component {
                 } else if (offset === 1) {
                     dateString = "tomorrow"
                 } else if (offset < 7) {
-                    dateString = this.DAY_OF_WEEK[this.props.task.due.getUTCDate()]
+                    dateString = this.DAY_OF_WEEK[this.props.task.due.getDay()]
+                } else if (offset < 14) {
+                    dateString = "next " + this.DAY_OF_WEEK[this.props.task.due.getDay()]
                 }
             } else {
                 dateString = offset + " days overdue"
@@ -77,8 +84,8 @@ class DatePicker extends React.Component {
                             hover:bg-lightGray transition-all duration-100 ease-in-out
                             py-1 px-2 rounded-md`
                         }
-                            onClick={() => { 
-                                this.props.rootHandlers.editTask(this.props.task.id, {due: new Date()}) 
+                            onClick={() => {
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.TODAY })
                                 this.setState({
                                     expanded: false
                                 })
@@ -90,14 +97,26 @@ class DatePicker extends React.Component {
                             `text-dateQuickSelect select-none cursor-pointer 
                             hover:bg-lightGray transition-all duration-100 ease-in-out
                             py-1 px-2 rounded-md`
-                        }>
+                        }
+                            onClick={() => {
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(2)})
+                                this.setState({
+                                    expanded: false
+                                })
+                            }}>
                             later this week
                         </div>
                         <div className={
                             `text-dateQuickSelect select-none cursor-pointer 
                             hover:bg-lightGray transition-all duration-100 ease-in-out
                             py-1 px-2 rounded-md`
-                        }>
+                        }
+                            onClick={() => {
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: null })
+                                this.setState({
+                                    expanded: false
+                                })
+                            }}>
                             none
                         </div>
                     </div>
@@ -106,14 +125,26 @@ class DatePicker extends React.Component {
                             `text-dateQuickSelect select-none cursor-pointer 
                             hover:bg-lightGray transition-all duration-100 ease-in-out
                             py-1 px-2 rounded-md`
-                        }>
+                        }
+                            onClick={() => {
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(1)})
+                                this.setState({
+                                    expanded: false
+                                })
+                            }}>
                             tomorrow
                         </div>
                         <div className={
                             `text-dateQuickSelect select-none cursor-pointer 
                             hover:bg-lightGray transition-all duration-100 ease-in-out
                             py-1 px-2 rounded-md`
-                        }>
+                        }
+                            onClick={() => {
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(7)})
+                                this.setState({
+                                    expanded: false
+                                })
+                            }}>
                             next week
                         </div>
                     </div>
