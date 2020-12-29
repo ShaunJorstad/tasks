@@ -5,7 +5,6 @@ class DatePicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            expanded: false
         }
         this.TODAY = new Date()
         this.DAY_OF_WEEK = {
@@ -52,13 +51,11 @@ class DatePicker extends React.Component {
         return (
             <div className={
                 `select-none cursor-pointer ` +
-                `text-darkGreen`
+                `${this.renderDateColor()}`
             }
                 onClick={() => {
-                    let change = !this.state.expanded
-                    this.setState({
-                        expanded: change
-                    })
+                    let change = (this.props.activeDate === null ? this.props.task.id : null)
+                    this.props.listHandlers.expandDate(change)
                 }}
             >
                 <span
@@ -71,9 +68,28 @@ class DatePicker extends React.Component {
 
     }
 
+    renderDateColor() {
+        if (this.props.task.due) {
+            let parsedDate = this.props.task.due.toLocaleDateString("en-US").split("/")
+            let offset = this.calcDayDifference(this.props.task.due)
+            if (offset >= 0) {
+                if (offset === 0) {
+                    return 'text-dateToday'
+                } else if (offset === 1) {
+                    return 'text-dateTomorrow'
+                } else {
+                    return 'text-dateFuture'
+                } 
+            } else {
+                return 'text-dateExpired'
+            }
+        } else {
+            return ('text-dateUnselected')
+        }
+    }
+
     renderPicker() {
         return (
-
             <div className={
                 `absolute wh-datepicker rounded-xl z-50`
             }>
@@ -85,7 +101,7 @@ class DatePicker extends React.Component {
                             py-1 px-2 rounded-md`
                         }
                             onClick={() => {
-                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.TODAY })
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.TODAY }, true)
                                 this.setState({
                                     expanded: false
                                 })
@@ -99,7 +115,7 @@ class DatePicker extends React.Component {
                             py-1 px-2 rounded-md`
                         }
                             onClick={() => {
-                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(2)})
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(2)}, true)
                                 this.setState({
                                     expanded: false
                                 })
@@ -112,7 +128,7 @@ class DatePicker extends React.Component {
                             py-1 px-2 rounded-md`
                         }
                             onClick={() => {
-                                this.props.rootHandlers.editTask(this.props.task.id, { due: null })
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: null }, true)
                                 this.setState({
                                     expanded: false
                                 })
@@ -127,7 +143,7 @@ class DatePicker extends React.Component {
                             py-1 px-2 rounded-md`
                         }
                             onClick={() => {
-                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(1)})
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(1)}, true)
                                 this.setState({
                                     expanded: false
                                 })
@@ -140,7 +156,7 @@ class DatePicker extends React.Component {
                             py-1 px-2 rounded-md`
                         }
                             onClick={() => {
-                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(7)})
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: this.generateDateFromToday(7)}, true)
                                 this.setState({
                                     expanded: false
                                 })
@@ -157,10 +173,10 @@ class DatePicker extends React.Component {
     render() {
         return (
             <div className={
-                ``
+                `m-date`
             }>
                 {this.renderDate()}
-                {this.state.expanded ? this.renderPicker() : null}
+                {this.props.activeDate === this.props.task.id ? this.renderPicker() : null}
             </div>
         );
     }

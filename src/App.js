@@ -108,8 +108,7 @@ class App extends React.Component {
 
   deleteList(id) {
     let updateLists = this.state.lists
-    delete updateLists.id
-    this.setState({ lists: updateLists })
+    delete updateLists[id]
     let deleteList = {}
     deleteList[`lists.${id}`] = del
     let removeTasks = this.state.tasks
@@ -117,6 +116,8 @@ class App extends React.Component {
       delete removeTasks[task.id]
       deleteList[`tasks.${task.id}`] = del
     })
+    this.setState({ lists: updateLists, tasks: removeTasks,selectedList: "59b98e7e-33be-4faa-b076-c4e9133a1bb7"})
+    console.log(this.state.lists)
     db.collection('users').doc(Config.email).update(deleteList)
   }
 

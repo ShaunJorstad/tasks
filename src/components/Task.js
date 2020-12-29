@@ -32,12 +32,14 @@ class Task extends React.Component {
     }
 
     renderTaskContent() {
+        console.log(this.props)
         return (
             <input
                 className="col-span-11 text-sfRegular text-14"
                 type='text'
                 placeholder="task content"
                 value={this.props.task.content}
+                onClick={() => { this.props.listHandlers.selectNewTask(this.props.task.id) }}
                 onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, {content: val.target.value}) }} />
         )
     }
@@ -67,16 +69,18 @@ class Task extends React.Component {
     renderDate() {
         return (
             <div className={`col-span-11`}>
-                <AnimateHeight
+                {/* <AnimateHeight
                     duration={500}
                     height={this.props.activeTask === this.props.task.id ? 'auto' : '0'}
-                >
+                > */}
                     <DatePicker
                         task={this.props.task}
                         activeTask={this.props.activeTask}
+                        activeDate={this.props.activeDate}
+                        listHandlers={this.props.listHandlers}
                         rootHandlers={this.props.rootHandlers}
                     />
-                </AnimateHeight>
+                {/* </AnimateHeight> */}
             </div>
         )
     }
@@ -86,7 +90,7 @@ class Task extends React.Component {
         return (
             <div
                 className="grid grid-cols-12 w-full gap-y-2"
-                onClick={() => { this.props.selectNewTask(this.props.task.id) }}>
+                >
                 {this.renderCheckCircle()}
                 {this.renderTaskContent()}
                 <div className="h-0"></div>
@@ -95,7 +99,7 @@ class Task extends React.Component {
                 {this.renderDate()}
                 <div className="h-0"></div>
                 <hr className={`
-                    col-span-11 opacity-10 mb-2
+                    col-span-11 opacity-10 mb-2 mt-1
                     ${this.props.activeTask === this.props.task.id ? '' : 'mt-03'}
                 `} />
             </div>

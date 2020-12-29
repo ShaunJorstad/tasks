@@ -7,10 +7,16 @@ class ListAll extends React.Component {
         super(props);
         this.state = {
             list: this.getList(),
-            activeTask: null
+            activeTask: null,
+            activeDate: null
         }
         this.selectNewTask = this.selectNewTask.bind(this);
         this.keyPress = this.keyPress.bind(this);
+        this.expandDate = this.expandDate.bind(this);
+        this.listHandlers = {
+            selectNewTask: this.selectNewTask,
+            expandDate: this.expandDate
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -37,7 +43,11 @@ class ListAll extends React.Component {
     }
 
     selectNewTask(id) {
-        this.setState({ activeTask: id })
+        this.setState({ activeTask: id, activeDate: null})
+    }
+
+    expandDate(id) {
+        this.setState({activeDate: id})
     }
 
     getList() {
@@ -53,13 +63,14 @@ class ListAll extends React.Component {
                 selectedList={this.props.selectedList}
                 task={task}
                 rootHandlers={this.props.rootHandlers}
-                selectNewTask={this.selectNewTask}
+                listHandlers={this.listHandlers}
                 activeTask={this.state.activeTask}
+                activeDate={this.state.activeDate}
             />
         )
 
         return (
-            <div className="w-full">
+            <div className="w-full h-full">
                 {defaultTasks}
                 {/* <Task lists={this.props.lists} selectedList={this.props.selectedList} /> */}
             </div>

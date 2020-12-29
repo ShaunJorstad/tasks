@@ -59,6 +59,10 @@
   font-size: 15px;
 }
 
+.m-date {
+  margin-top: -20px;
+}
+
 textarea {
   resize: none;
 }
