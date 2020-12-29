@@ -6,7 +6,6 @@ class ContentHeader extends React.Component {
         this.state = {
 
         }
-        // console.log(this.props.lists[this.props.selectedList])
     }
 
     getList() {
@@ -25,9 +24,11 @@ class ContentHeader extends React.Component {
                 {this.props.view === "list" ?
                     <p
                         className="inline-block align-middle cursor-pointer select-none text-right addTaskButton text-gray pr-2"
-                        onClick={() => {this.props.createTask(this.getList().id, 'default')}}>+</p> :
+                        onClick={() => { this.props.rootHandlers.createTask(this.getList().id, null) }}>+</p> :
                     <div></div>}
-                <p className={`inline-block align-middle select-none text-right taskCount text-${this.getList().color}`}>{this.getList().taskCount}</p>
+                <p className={`inline-block align-middle select-none text-right taskCount text-${this.getList().color}`}>
+                    {Object.values(this.props.tasks).filter(task => task.listID === this.getList().id).length}
+                </p>
             </div>)
     }
 
@@ -55,29 +56,29 @@ class ContentHeader extends React.Component {
                         <div id="filterControls" className="inline-block justify-self-end mr-3  mt-2">
                             <div
                                 className={`${this.renderFilterBackground('all')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
-                                onClick={() => { this.props.updateFilter('all') }}>
+                                onClick={() => { this.props.contentHandlers.updateFilter('all') }}>
                                 All</div>
                             <div
                                 className={`${this.renderFilterBackground('today')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
-                                onClick={() => { this.props.updateFilter('today') }}>
+                                onClick={() => { this.props.contentHandlers.updateFilter('today') }}>
                                 Today</div>
                             <div
                                 className={`${this.renderFilterBackground('upcoming')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
-                                onClick={() => { this.props.updateFilter('upcoming') }}>
+                                onClick={() => { this.props.contentHandlers.updateFilter('upcoming') }}>
                                 Upcoming</div>
                         </div>
                         <div id="viewControls" className="inline-block align-middle mt-2">
                             <div
                                 className={`${this.renderViewBackground('config')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
-                                onClick={() => { this.props.updateView('config') }}>
+                                onClick={() => { this.props.contentHandlers.updateView('config') }}>
                                 config</div>
                             <div
                                 className={`${this.renderViewBackground('list')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
-                                onClick={() => { this.props.updateView('list') }}>
+                                onClick={() => { this.props.contentHandlers.updateView('list') }}>
                                 list</div>
                             <div
                                 className={`${this.renderViewBackground('calendar')} inline-block align-middle px-2 select-none py-1 rounded-md transition-all: duration-150 ease-in-out cursor-pointer text-gray control`}
-                                onClick={() => { this.props.updateView('calendar') }}>
+                                onClick={() => { this.props.contentHandlers.updateView('calendar') }}>
                                 calendar</div>
                         </div>
                     </div> : <div className="col-span-4"></div>}

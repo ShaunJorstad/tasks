@@ -1,5 +1,6 @@
 import React from 'react';
 import AnimateHeight from 'react-animate-height';
+import DatePicker from './DatePicker.js';
 
 class Task extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Task extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.activeTask === prevProps.task.id && this.props.activeTask !== this.props.task.id) {
-            this.props.editTask(this.getList().id, 'default', this.props.task.id, null, true)
+            this.props.rootHandlers.editTask(this.props.task.id, {}, true)
         }
     }
 
@@ -22,7 +23,7 @@ class Task extends React.Component {
     renderCheckCircle() {
         return (
             <div className="cursor-pointer" onClick={() => {
-                this.props.completeTask(this.getList().id, 'default', this.props.task.id)
+                this.props.rootHandlers.completeTask(this.props.task.id)
             }}>
                 <div className="rounded-full w-5 h-5 border-2 border-gray mt-1">
                 </div>
@@ -36,8 +37,8 @@ class Task extends React.Component {
                 className="col-span-11 text-sfRegular text-14"
                 type='text'
                 placeholder="task content"
-                value={this.props.content}
-                onChange={val => { this.props.editTask(this.getList().id, 'default', this.props.task.id, { content: val.target.value }) }} />
+                value={this.props.task.content}
+                onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, {content: val.target.value}) }} />
         )
     }
 
@@ -55,8 +56,8 @@ class Task extends React.Component {
                         `}
                         type='text'
                         placeholder="notes"
-                        value={this.props.task.description}
-                        onChange={val => { this.props.editTask(this.getList().id, 'default', this.props.task.id, { description: val.target.value }) }} />
+                        value={this.props.task.notes}
+                        onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, {notes: val.target.value}) }} />
                 </AnimateHeight>
             </div>
 
@@ -70,6 +71,7 @@ class Task extends React.Component {
                     duration={500}
                     height={this.props.activeTask === this.props.task.id ? 'auto' : '0'}
                 >
+                    {/* <DatePicker/> */}
                     date
                 </AnimateHeight>
             </div>
@@ -81,7 +83,7 @@ class Task extends React.Component {
         return (
             <div
                 className="grid grid-cols-12 w-full gap-y-2"
-                onClick={() => { this.props.selectNewTask(this.props.id) }}>
+                onClick={() => { this.props.selectNewTask(this.props.task.id) }}>
                 {this.renderCheckCircle()}
                 {this.renderTaskContent()}
                 <div className="h-0"></div>

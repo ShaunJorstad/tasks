@@ -52,7 +52,6 @@ export class List {
         this.sections = {}
         this.taskCount = listData.taskCount
         Object.entries(listData.sections).forEach((sectionData) => {
-            console.log(sectionData)
             this.sections[sectionData[0]] = new Section(sectionData[0], sectionData[1])
         })
     }

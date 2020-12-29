@@ -68,7 +68,9 @@ class ListTile extends React.Component {
 
     renderTaskCount() {
         return (
-            <p className={`text-right select-none px-2 list ${(this.isSelected() ? 'text-white' : 'text-gray')}`}>{this.props.list.taskCount}</p>
+            <p className={`text-right select-none px-2 list ${(this.isSelected() ? 'text-white' : 'text-gray')}`}>{
+                Object.values(this.props.tasks).filter(task => task.listID === this.props.list.id).length
+            }</p>
         );
     }
 
@@ -82,7 +84,7 @@ class ListTile extends React.Component {
         return (
             <div
                 className={`cursor-pointer py-1 select-none transition-all duration-200 ease-in-out ${this.renderBackground()}`}
-                onClick={() => { this.props.selectNewList(this.props.list.id) }}>
+                onClick={() => { this.props.rootHandlers.selectNewList(this.props.list.id) }}>
                 <div className="grid grid-cols-8 auto-cols-min pl-2">
                     {this.renderIcon()}
                     {this.renderTitle()}

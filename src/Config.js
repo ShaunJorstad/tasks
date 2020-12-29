@@ -38,7 +38,7 @@ class Config extends React.Component {
             this.setState({
                 validName: true
             })
-            this.props.updateListName(val, this.getList().id)
+            this.props.rootHandlers.editList(this.getList().id, {name: val})
         }
     }
 
@@ -54,7 +54,7 @@ class Config extends React.Component {
             this.setState({
                 validColor: true
             })
-            this.props.updateListColor(val, this.getList().id)
+            this.props.rootHandlers.editList(this.getList().id, {color: val})
         }
     }
 
@@ -98,7 +98,7 @@ class Config extends React.Component {
 
     renderDeleteButton() {
         return (
-            <div className="select-none cursor-pointer bg-lightRed text-red col-span-3 px-4 py-4 rounded-lg mt-48 flex justify-center" onClick={() => { this.props.deleteList(this.getList().id) }}>
+            <div className="select-none cursor-pointer bg-lightRed text-red col-span-3 px-4 py-4 rounded-lg mt-48 flex justify-center" onClick={() => { this.props.rootHandlers.deleteList(this.getList().id) }}>
                 <p className="">delete</p>
             </div>
         )

@@ -12,6 +12,10 @@ class Content extends React.Component {
     }
     this.updateFilter = this.updateFilter.bind(this);
     this.updateView = this.updateView.bind(this);
+    this.contentHandlers = {
+      updateFilter: this.updateFilter,
+      updateView: this.updateView
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -41,20 +45,20 @@ class Content extends React.Component {
         return (
           <Config
             lists={this.props.lists}
+            tasks={this.props.tasks}
             selectedList={this.props.selectedList}
-            updateListName={this.props.updateListName}
-            updateListColor={this.props.updateListColor}
-            deleteList={this.props.deleteList} />
+            rootHandlers={this.props.rootHandlers}
+          />
         );
       case "list":
         switch (this.state.filter) {
           case "all":
             return <ListAll
-              lists={this.props.lists} 
+              lists={this.props.lists}
+              tasks={this.props.tasks}
               selectedList={this.props.selectedList}
-              editTask={this.props.editTask}
-              createTask={this.props.createTask}
-              completeTask={this.props.completeTask}/>
+              rootHandlers={this.props.rootHandlers}
+            />
           case 'today':
             return ('today')
           case 'upcoming':
@@ -82,12 +86,13 @@ class Content extends React.Component {
         <div className="mx-4 w-9/10 h-full">
           <ContentHeader
             lists={this.props.lists}
+            tasks={this.props.tasks}
             selectedList={this.props.selectedList}
             filter={this.state.filter}
             view={this.state.view}
-            updateFilter={this.updateFilter}
-            updateView={this.updateView} 
-            createTask={this.props.createTask}/>
+            contentHandlers={this.contentHandlers}
+            rootHandlers={this.props.rootHandlers}
+          />
           <div className="h-5/6">
             {this.renderContents()}
           </div>

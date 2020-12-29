@@ -1,5 +1,6 @@
 import React from 'react';
 import Task from './Task.js';
+import { getTestData, logData } from '../data.js';
 
 class ListAll extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class ListAll extends React.Component {
                 break
             default:
                 break
-        } 
+        }
     }
 
     selectNewTask(id) {
@@ -44,32 +45,22 @@ class ListAll extends React.Component {
     }
 
     render() {
-        let tasks = []
 
-        for (let taskID in this.state.list.sections.default.tasks) {
-            let tmpTask = this.state.list.sections.default.tasks[taskID]
-            tasks.push(tmpTask)
-        }
-
-        tasks = tasks.sort((a, b) => { return a.order - b.order }).map(task =>
+        let defaultTasks = Object.values(this.props.tasks).filter(task => task.listID === this.getList().id && task.sectionID === null).sort((a, b) => { return a.order - b.order }).map(task =>
             <Task
+                key={task.id}
                 lists={this.props.lists}
                 selectedList={this.props.selectedList}
-                id={task.id}
-                content={task.content}
-                description={task.description}
-                due={task.due}
                 task={task}
-                editTask={this.props.editTask}
+                rootHandlers={this.props.rootHandlers}
                 selectNewTask={this.selectNewTask}
                 activeTask={this.state.activeTask}
-                completeTask={this.props.completeTask}
             />
         )
 
         return (
             <div className="w-full">
-                {tasks}
+                {defaultTasks}
                 {/* <Task lists={this.props.lists} selectedList={this.props.selectedList} /> */}
             </div>
         );

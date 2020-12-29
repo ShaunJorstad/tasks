@@ -36,6 +36,12 @@
   margin-top: -20px;
 }
 
+.wh-datepicker {
+  width: 300px;
+  height: 400px;
+  background-color: white;
+}
+
 textarea {
   resize: none
 }
