@@ -21,7 +21,15 @@
 }
 
 .text-sfRegular {
-  font-family: 'sfRounded-regular'
+  font-family: "sfRounded-regular";
+}
+
+.text-sfLight {
+  font-family: "sfRounded-light";
+}
+
+.text-sfMedium {
+  font-family: "sfRounded-medium";
 }
 
 .text-14 {
@@ -37,13 +45,22 @@
 }
 
 .wh-datepicker {
-  width: 300px;
-  height: 400px;
+  width: 292px;
+  height: 416px;
   background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 11px;
+}
+
+.text-dateQuickSelect {
+  font-family: 'sfRounded-light';
+  font-size: 15px;
 }
 
 textarea {
-  resize: none
+  resize: none;
 }
 
 body {
@@ -154,7 +171,7 @@ body {
 }
 
 .configLabel {
-  font-family: 'sfRounded-regular';
+  font-family: "sfRounded-regular";
   font-size: 20px;
   line-height: 24px;
 }
@@ -165,19 +182,18 @@ body {
     margin-left: -230px;
     background-color: white;
   }
-  
+
   .dynamicNav:hover {
     /* left:0px; */
     margin-left: 0px;
   }
 }
 
-
 input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 @layer utilities {

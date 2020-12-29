@@ -1,7 +1,5 @@
 import firebase from 'firebase';
 
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyBgtU1g6WHNiYqzjU-Ew-Lupl7VZXXisXY",
     authDomain: "tasks-d6ab8.firebaseapp.com",
@@ -16,5 +14,6 @@ var db = fire.firestore();
 let inc = firebase.firestore.FieldValue.increment(1)
 let dec = firebase.firestore.FieldValue.increment(-1)
 let del = firebase.firestore.FieldValue.delete()
+let Timestamp = firebase.firestore.Timestamp
 
-export { db, inc, dec, del };
+export { db, inc, dec, del, Timestamp };

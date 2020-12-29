@@ -71,8 +71,11 @@ class Task extends React.Component {
                     duration={500}
                     height={this.props.activeTask === this.props.task.id ? 'auto' : '0'}
                 >
-                    {/* <DatePicker/> */}
-                    date
+                    <DatePicker
+                        task={this.props.task}
+                        activeTask={this.props.activeTask}
+                        rootHandlers={this.props.rootHandlers}
+                    />
                 </AnimateHeight>
             </div>
         )

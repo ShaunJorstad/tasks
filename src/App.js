@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import NavBar from './components/NavBar.js';
 import Content from './components/Content.js';
-import { db, inc, dec, del } from './FirebaseConfig';
+import { db, inc, dec, del, Timestamp } from './FirebaseConfig';
 import { v4 as uuidv4 } from 'uuid';
 import Config from './config.json';
 import 'tailwindcss/tailwind.css';
@@ -55,6 +55,9 @@ class App extends React.Component {
         // parse the tasks
         for (let taskID in doc.data().tasks) {
           tmpTasks[taskID] = doc.data().tasks[taskID]
+          if (tmpTasks[taskID].due !== null) {
+            tmpTasks[taskID].due = doc.data().tasks[taskID].due.toDate()
+          }
         }
         this.setState({
           lists: tmpLists,
@@ -123,7 +126,7 @@ class App extends React.Component {
       due: null,
       id: uuidv4(),
       notes: '',
-      order: Object.values(this.state.tasks).filter(task => task.listID === listID && task.sectionID === sectionID).length,
+      order: Object.values(this.state.tasks).filter(task => task.listID === listID && task.sectionID === sectionID).length +1,
       listID: listID,
       sectionID: sectionID
     }
@@ -149,6 +152,9 @@ class App extends React.Component {
       for (let key in task) {
         pushChanges[`tasks.${taskID}.${key}`] = task[key]
       }
+      if (task.due !== null) {
+        pushChanges[`tasks.${taskID}.due`] = Timestamp.fromDate(task.due)
+      }
 
       db.collection('users').doc(Config.email).update(pushChanges)
     }
@@ -157,6 +163,7 @@ class App extends React.Component {
   completeTask(taskID) {
     let updateTasks = this.state.tasks
     delete updateTasks[taskID]
+    this.setState({tasks: updateTasks})
     let pushChanges = {}
     pushChanges[`tasks.${taskID}`] = del
     db.collection('users').doc(Config.email).update(pushChanges)
