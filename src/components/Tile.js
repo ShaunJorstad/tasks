@@ -63,8 +63,10 @@ class Tile extends React.Component {
             <div
                 id={this.props.title + "Tile"}
                 className={`${this.renderBackgroundColor() + ' wh-tile rounded-lg'}`}
-                onClick={() => { this.props.selectNewList(this.props.title) }
-                }>
+                onClick={() => {
+
+                    this.props.rootHandlers.selectNewList(this.props.title)
+                }}>
                 <div className="place-self-center grid grid-cols-2 py-2 px-2 justify-between gap-1">
                     {this.renderIcon()}
                     {this.renderTaskCount()}

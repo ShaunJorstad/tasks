@@ -58,17 +58,6 @@ class Content extends React.Component {
               selectedList={this.props.selectedList}
               rootHandlers={this.props.rootHandlers}
             />
-        // switch (this.state.filter) {
-        //   case "all":
-            
-        //   case 'today':
-        //     return ('today')
-        //   case 'upcoming':
-        //     return ('upcoming')
-        //   default:
-        //     return 'error'
-        // }
-        // return ('list');
       case "calendar":
         return ('calendar')
       default:

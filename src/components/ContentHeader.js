@@ -12,13 +12,45 @@ class ContentHeader extends React.Component {
         return this.props.lists[this.props.selectedList]
     }
 
+    getGlobalTitleColor() {
+        switch (this.props.selectedList) {
+            case ("all"):
+                return 'gray'
+            case ("upcoming"):
+                return 'red'
+            case ("today"):
+                return "blue"
+            default:
+                break;
+        }
+    }
+
+    calcDayDifference(day) {
+        return Math.ceil((day.getTime() - (new Date()).getTime()) / (1000 * 3600 * 24))
+    }
+
+    getTodayCount() {
+        return Object.values(this.props.tasks).filter(task => task.due !== null && this.calcDayDifference(task.due) === 0).length
+    }
+
     renderTitle() {
+        if (['all', 'upcoming', 'today'].includes(this.props.selectedList)) {
+            return(<p className={`col-span-2 listTitle text-${this.getGlobalTitleColor()} select-none`}>{this.props.selectedList}</p>)
+        }
         return (
             <p className={`col-span-2 listTitle text-${this.getList().color} select-none`}>{this.getList().name}</p>
         );
     }
 
     renderTaskCount() {
+        if (['all', 'upcoming', 'today'].includes(this.props.selectedList)) {
+            return (
+                <div className="inline-block align-middle mt-2 align-right place-self-end pr-3">
+                    <p className={`inline-block align-middle select-none text-right taskCount text-${this.getGlobalTitleColor()}`}>
+                        {this.getTodayCount()}
+                    </p>
+                </div>)
+        }
         return (
             <div className="inline-block align-middle mt-2 align-right place-self-end pr-3">
                 {this.props.view === "list" ?
@@ -51,7 +83,7 @@ class ContentHeader extends React.Component {
         return (
             <div className="mt-7 grid grid-cols-7">
                 {this.renderTitle()}
-                {this.getList().id !== 0 ?
+                {!["all", "upcoming", "today"].includes(this.props.selectedList) ?
                     <div className="col-span-4 grid grid-cols-2 gap-x-2 ">
                         <div id="filterControls" className="inline-block justify-self-end mr-3  mt-2">
                             <div

@@ -16,7 +16,14 @@ class Task extends React.Component {
         }
     }
 
-    getList() {
+    getList(listID = null) {
+        if (listID !== null) {
+            return this.props.lists[listID]
+        }
+        if (['all', 'today', 'upcoming'].includes(this.props.selectedList)) {
+            return { color: 'blue' }
+        }
+        console.log(this.props.selectedList)
         return this.props.lists[this.props.selectedList]
     }
 
@@ -27,8 +34,8 @@ class Task extends React.Component {
                     onClick={() => {
                         this.props.rootHandlers.completeTask(this.props.task.id)
                     }}
-                    className={`taskCheckCircle rounded-full w-5 h-5 border-2 mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none
-                    ${this.props.deleteHover? `scale-75 bg-${this.getList().color} border-${this.getList().color} ` : `border-gray`}`}>
+                    className={`taskCheckCircle rounded-full w-5 h-5 border-2 mt-1 hover:bg-${this.getList(this.props.task.listID).color} hover:border-${this.getList(this.props.task.listID).color} transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none
+                    ${this.props.deleteHover ? `scale-75 bg-${this.getList().color} border-${this.getList().color} ` : `border-gray`}`}>
                 </div>
             </div>
         )

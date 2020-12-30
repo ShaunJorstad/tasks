@@ -9,12 +9,19 @@ class TaskSection extends React.Component {
         }
     }
 
-    getList() {
+    getList(listID = null) {
+        if (listID !== null) {
+            return this.props.lists[listID]
+        }
+        if (['all', 'today', 'upcoming'].includes(this.props.selectedList)) {
+            return { color: 'blue' }
+        }
+        console.log(this.props.selectedList)
         return this.props.lists[this.props.selectedList]
     }
 
     renderSectionTitle() {
-        if (this.props.filter !== "upcoming") {
+        if (!['all', 'today', 'upcoming'].includes(this.props.selectedList)) {
             return (this.props.sectionName !== null ?
                 <input
                     className={`col-span-11 text-sfMedium text-18 text-${this.getList().color}`}
@@ -25,7 +32,7 @@ class TaskSection extends React.Component {
         }
         return (this.props.sectionName !== null ?
             <p
-                className={`select-none cursor-pointer col-span-11 text-sfMedium text-18 text-${this.getList().color}`}
+                className={`select-none cursor-pointer col-span-11 text-sfMedium text-18 text-${this.getList(this.props.listID).color}`}
             >{this.props.sectionName}</p> : null)
     }
 
@@ -37,7 +44,7 @@ class TaskSection extends React.Component {
                         if (this.props.filter === "today") {
                             this.props.rootHandlers.deleteSection(this.getList().id, this.props.sectionID)
                         } else {
-                            this.props.rootHandlers.batchDeleteTasks(this.props.tasks.map(task => task.id)) 
+                            this.props.rootHandlers.batchDeleteTasks(this.props.tasks.map(task => task.id))
                         }
                     }}
                     onMouseOver={() => {
@@ -67,24 +74,36 @@ class TaskSection extends React.Component {
                     transition-all duration-75 ease-in-out
                 `}
                 onClick={() => {
-                    switch (this.props.filter) {
+                    switch (this.props.selectedList) {
                         case ("all"):
-                            this.props.rootHandlers.createTask(this.getList().id, this.props.sectionID)
+                            this.props.rootHandlers.createTask(this.props.listID, null, null)
                             break
                         case ("today"):
-                            this.props.rootHandlers.createTask(
-                                this.getList().id,
-                                this.props.sectionID,
-                                new Date())
+                            this.props.rootHandlers.createTask(this.props.listID, null, this.generateDateFromToday(0))
                             break
                         case ("upcoming"):
-                            this.props.rootHandlers.createTask(
-                                this.getList().id,
-                                null,
-                                this.generateDateFromToday(this.props.offset))
+                            this.props.rootHandlers.createTask(this.props.listID, null, this.generateDateFromToday(7))
                             break
                         default:
-                            break
+                            switch (this.props.filter) {
+                                case ("all"):
+                                    this.props.rootHandlers.createTask(this.getList().id, this.props.sectionID)
+                                    break
+                                case ("today"):
+                                    this.props.rootHandlers.createTask(
+                                        this.getList().id,
+                                        this.props.sectionID,
+                                        new Date())
+                                    break
+                                case ("upcoming"):
+                                    this.props.rootHandlers.createTask(
+                                        this.getList().id,
+                                        null,
+                                        this.generateDateFromToday(this.props.offset))
+                                    break
+                                default:
+                                    break
+                            }
                     }
                 }}>
                 <div></div>
@@ -129,8 +148,8 @@ class TaskSection extends React.Component {
 
         return (
             <div className="w-full section">
-                <div className="sticky top-0 bg-white z-50 w-full grid grid-cols-12 sectionHeader">
-                    {this.renderDeleteButton()}
+                <div className="sticky top-0 bg-white z-40 w-full grid grid-cols-12 sectionHeader">
+                    {['all', 'upcoming', 'today'].includes(this.props.selectedList) ? <div></div> : this.renderDeleteButton()}
                     {this.renderSectionTitle()}
                 </div>
                 {renderedTasksWithDates}

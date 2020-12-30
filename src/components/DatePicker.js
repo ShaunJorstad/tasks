@@ -85,7 +85,7 @@ class DatePicker extends React.Component {
         }
         return (
             <div className={
-                `select-none cursor-pointer  
+                `select-none cursor-pointer 
                 ${this.renderDateColor()}`
             }
                 onClick={(e) => {

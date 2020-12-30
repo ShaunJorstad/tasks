@@ -11,7 +11,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedList: "59b98e7e-33be-4faa-b076-c4e9133a1bb7",
+      selectedList: "today",
       lists: {},
       tasks: {}
     }
@@ -166,7 +166,7 @@ class App extends React.Component {
       delete updateTasks[taskID]
       pushChanges[`tasks.${taskID}`] = del
     })
-    this.setState({tasks: updateTasks})
+    this.setState({ tasks: updateTasks })
     db.collection('users').doc(Config.email).update(pushChanges)
   }
 
@@ -180,7 +180,7 @@ class App extends React.Component {
       delete removeTasks[task.id]
       deleteList[`tasks.${task.id}`] = del
     })
-    this.setState({ lists: updateLists, tasks: removeTasks, selectedList: "59b98e7e-33be-4faa-b076-c4e9133a1bb7" })
+    this.setState({ lists: updateLists, tasks: removeTasks, selectedList: "today" })
     console.log(this.state.lists)
     db.collection('users').doc(Config.email).update(deleteList)
   }

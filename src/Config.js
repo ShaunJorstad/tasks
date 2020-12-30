@@ -12,7 +12,7 @@ class Config extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.selectedList != prevProps.selectedList) {
+        if (this.props.selectedList != prevProps.selectedList && !['today', 'all', 'upcoming'].includes(this.props.selectedList)) {
             this.setState({
                 nameInput: this.getList().name,
                 validName: true,

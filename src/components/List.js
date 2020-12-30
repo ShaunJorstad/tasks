@@ -71,8 +71,16 @@ class List extends React.Component {
         }
     }
 
+    getListTasks(listID, dueOffset = null) {
+        if (dueOffset === null) {
+            return Object.values(this.props.tasks).filter(task => task.listID === listID).sort((a, b) => { return a.order - b.order })
+        } else {
+            return Object.values(this.props.tasks).filter(task => task.listID === listID && task.due !== null && this.calcDayDifference(task.due) <= dueOffset).sort((a, b) => { return a.order - b.order })
+        }
+    }
+
     getDateTasks(dueOffset) {
-        return Object.values(this.props.tasks).filter(task => task.due !== null && this.calcDayDifference(task.due) === dueOffset).sort((a, b) => { return a.order - b.order })
+        return Object.values(this.props.tasks).filter(task => task.listID === this.getList().id && task.due !== null && this.calcDayDifference(task.due) === dueOffset).sort((a, b) => { return a.order - b.order })
     }
 
     getUpcomingName(dueOffset) {
@@ -205,16 +213,107 @@ class List extends React.Component {
         );
     }
 
+    renderGlobalAll() {
+        let lists = Object.values(this.props.lists).sort((a, b) => { return a.order - b.order }).map(list => {
+            let tasks = this.getListTasks(list.id)
+            if (tasks.length > 0) {
+                return <TaskSection
+                    key={list.id}
+                    filter={this.props.filter}
+                    tasks={tasks}
+                    sectionID={list.id}
+                    listID={list.id}
+                    sectionName={list.name}
+                    lists={this.props.lists}
+                    selectedList={this.props.selectedList}
+                    rootHandlers={this.props.rootHandlers}
+                    listHandlers={this.listHandlers}
+                    activeTask={this.state.activeTask}
+                    activeDate={this.state.activeDate}
+                />
+            }
+        })
+
+        return (
+            <div className="w-full h-full overflow-auto hide-scrollbar">
+                {lists}
+            </div>
+        );
+    }
+    renderGlobalUpcoming() {
+        let lists = Object.values(this.props.lists).sort((a, b) => { return a.order - b.order }).map(list => {
+            let tasks = this.getListTasks(list.id, 7)
+            if (tasks.length > 0) {
+                return <TaskSection
+                    key={list.id}
+                    filter={this.props.filter}
+                    tasks={tasks}
+                    sectionID={list.id}
+                    listID={list.id}
+                    sectionName={list.name}
+                    lists={this.props.lists}
+                    selectedList={this.props.selectedList}
+                    rootHandlers={this.props.rootHandlers}
+                    listHandlers={this.listHandlers}
+                    activeTask={this.state.activeTask}
+                    activeDate={this.state.activeDate}
+                />
+            }
+        })
+
+        return (
+            <div className="w-full h-full overflow-auto hide-scrollbar">
+                {lists}
+            </div>
+        );
+    }
+    renderGlobalToday() {
+        let lists = Object.values(this.props.lists).sort((a, b) => { return a.order - b.order }).map(list => {
+            let tasks = this.getListTasks(list.id, 0)
+            if (tasks.length > 0) {
+                return <TaskSection
+                    key={list.id}
+                    filter={this.props.filter}
+                    tasks={tasks}
+                    sectionID={list.id}
+                    listID={list.id}
+                    sectionName={list.name}
+                    lists={this.props.lists}
+                    selectedList={this.props.selectedList}
+                    rootHandlers={this.props.rootHandlers}
+                    listHandlers={this.listHandlers}
+                    activeTask={this.state.activeTask}
+                    activeDate={this.state.activeDate}
+                />
+            }
+        })
+
+        return (
+            <div className="w-full h-full overflow-auto hide-scrollbar">
+                {lists}
+            </div>
+        );
+    }
+
     render() {
-        switch (this.props.filter) {
+        switch (this.props.selectedList) {
             case ("all"):
-                return (this.renderAll())
-            case ("today"):
-                return (this.renderToday())
+                return (this.renderGlobalAll())
             case ("upcoming"):
-                return (this.renderUpcoming())
+                return (this.renderGlobalUpcoming())
+            case ("today"):
+                return (this.renderGlobalToday())
             default:
-                break
+                switch (this.props.filter) {
+                    case ("all"):
+                        return (this.renderAll())
+                    case ("today"):
+                        return (this.renderToday())
+                    case ("upcoming"):
+                        return (this.renderUpcoming())
+                    default:
+                        break
+                }
         }
     }
 }
