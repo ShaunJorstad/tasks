@@ -58,6 +58,21 @@ class ListAll extends React.Component {
         return Object.values(this.props.tasks).filter(task => task.sectionID === sectionID).sort((a, b) => { return a.order - b.order })
     }
 
+    renderAddSectionButton() {
+        return (
+            <div className="grid grid-cols-12">
+                <div></div>
+                <div className="col-span-11 w-full items-center cursor-pointer">
+                    <p
+                        className="select-none place-self-center text-center pl-2 pt-4 newListButton text-gray"
+                        onClick={() => { this.props.rootHandlers.createSection(this.getList().id) }}
+                    >+ Add Section</p>
+                </div>
+
+            </div>
+        )
+    }
+
     render() {
         let defaultTasks = Object.values(this.props.tasks).filter(task => task.listID === this.getList().id && task.sectionID === null).sort((a, b) => { return a.order - b.order })
 
@@ -90,6 +105,7 @@ class ListAll extends React.Component {
                     activeDate={this.state.activeDate}
                 />
                 {sections}
+                {this.renderAddSectionButton()}
             </div>
         );
     }
