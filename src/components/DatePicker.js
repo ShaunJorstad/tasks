@@ -5,6 +5,7 @@ class DatePicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            bottomAlign: false
         }
         this.TODAY = new Date()
         this.DAY_OF_WEEK = {
@@ -87,7 +88,12 @@ class DatePicker extends React.Component {
                 `select-none cursor-pointer  
                 ${this.renderDateColor()}`
             }
-                onClick={() => {
+                onClick={(e) => {
+                    if (e.clientY > 350) {
+                        this.setState({ bottomAlign: true })
+                    } else {
+                        this.setState({ bottomAlign: false })
+                    }
                     let change = (this.props.activeDate === null ? this.props.task.id : null)
                     this.props.listHandlers.expandDate(change)
                 }}
@@ -137,7 +143,7 @@ class DatePicker extends React.Component {
                         <div className="w-full text-center">T</div>
                         <div className="w-full text-center">F</div>
                         <div className="w-full text-center">S</div>
-                        <hr className={`col-span-7 opacity-10`}/>
+                        <hr className={`col-span-7 opacity-10`} />
                     </div> : null}
                 <div className={`sticky bg-white top-0 text-15 font-bold pl-4 pb-1 text-sfRegular text-${this.props.listColor}`}>
                     {this.MONTHS[this.UpcomingMonths[i][0].getMonth()] + ' ' + this.UpcomingMonths[i][0].getFullYear()}
@@ -146,16 +152,16 @@ class DatePicker extends React.Component {
                     <div className={`col-span-${this.UpcomingMonths[i][0].getDay()}`}></div>
                     {/* {i === 0? <div></div> */}
                     {/* :}  */}
-                    {[...Array(this.UpcomingMonths[i][1] - (this.UpcomingMonths[i][0].getDate() -1)).keys()].map(date =>
+                    {[...Array(this.UpcomingMonths[i][1] - (this.UpcomingMonths[i][0].getDate() - 1)).keys()].map(date =>
                         <div className={`
                         text-center text-sfLight text-13 select-none cursor-pointer py-1 rounded-md
                         hover:bg-lightGray
-                        ${i===0 && date===0? `text-${this.props.listColor}`: null}`}
-                        onClick={() => {
-                            let newDate = this.generateDateFromOffset(this.UpcomingMonths[i][0], date)
-                            this.props.rootHandlers.editTask(this.props.task.id, {due: newDate}, true)
-                            this.props.listHandlers.expandDate(null)
-                        }}>
+                        ${i === 0 && date === 0 ? `text-${this.props.listColor}` : null}`}
+                            onClick={() => {
+                                let newDate = this.generateDateFromOffset(this.UpcomingMonths[i][0], date)
+                                this.props.rootHandlers.editTask(this.props.task.id, { due: newDate }, true)
+                                this.props.listHandlers.expandDate(null)
+                            }}>
                             {date + this.UpcomingMonths[i][0].getDate()}
                         </div>
                     )}
@@ -164,7 +170,7 @@ class DatePicker extends React.Component {
         )
         return (
             <div className={
-                `absolute wh-datepicker rounded-xl z-50`
+                `absolute wh-datepicker rounded-xl z-50 ${this.state.bottomAlign? `bottom-0`: null}`
             }>
                 <div className={`grid grid-cols-2 pt-3 px-4`}>
                     <div className={`flex flex-col`}>

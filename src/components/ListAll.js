@@ -1,6 +1,6 @@
 import React from 'react';
 import Task from './Task.js';
-import { getTestData, logData } from '../data.js';
+import TaskSection from './TaskSection.js';
 
 class ListAll extends React.Component {
     constructor(props) {
@@ -43,25 +43,32 @@ class ListAll extends React.Component {
     }
 
     selectNewTask(id) {
-        this.setState({ activeTask: id, activeDate: null})
+        this.setState({ activeTask: id, activeDate: null })
     }
 
     expandDate(id) {
-        this.setState({activeDate: id})
+        this.setState({ activeDate: id })
     }
 
     getList() {
         return this.props.lists[this.props.selectedList]
     }
 
-    render() {
+    getSectionTasks(sectionID) {
+        return Object.values(this.props.tasks).filter(task => task.sectionID === sectionID).sort((a, b) => { return a.order - b.order })
+    }
 
-        let defaultTasks = Object.values(this.props.tasks).filter(task => task.listID === this.getList().id && task.sectionID === null).sort((a, b) => { return a.order - b.order }).map(task =>
-            <Task
-                key={task.id}
+    render() {
+        let defaultTasks = Object.values(this.props.tasks).filter(task => task.listID === this.getList().id && task.sectionID === null).sort((a, b) => { return a.order - b.order })
+
+        let sections = Object.values(this.getList().sections).sort((a, b) => { return a.order - b.order }).map(section =>
+            <TaskSection
+                key={section.id}
+                tasks={this.getSectionTasks(section.id)}
+                sectionID={section.id}
+                sectionName={section.name}
                 lists={this.props.lists}
                 selectedList={this.props.selectedList}
-                task={task}
                 rootHandlers={this.props.rootHandlers}
                 listHandlers={this.listHandlers}
                 activeTask={this.state.activeTask}
@@ -71,8 +78,18 @@ class ListAll extends React.Component {
 
         return (
             <div className="w-full h-full overflow-auto hide-scrollbar">
-                {defaultTasks}
-                {/* <Task lists={this.props.lists} selectedList={this.props.selectedList} /> */}
+                <TaskSection
+                    tasks={defaultTasks}
+                    sectionID={null}
+                    sectionName={null}
+                    lists={this.props.lists}
+                    selectedList={this.props.selectedList}
+                    rootHandlers={this.props.rootHandlers}
+                    listHandlers={this.listHandlers}
+                    activeTask={this.state.activeTask}
+                    activeDate={this.state.activeDate}
+                />
+                {sections}
             </div>
         );
     }
