@@ -70,7 +70,7 @@ class ListAll extends React.Component {
         )
 
         return (
-            <div className="w-full h-full">
+            <div className="w-full h-full overflow-auto hide-scrollbar">
                 {defaultTasks}
                 {/* <Task lists={this.props.lists} selectedList={this.props.selectedList} /> */}
             </div>

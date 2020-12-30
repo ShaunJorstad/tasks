@@ -25,14 +25,13 @@ class Task extends React.Component {
             <div className="cursor-pointer" onClick={() => {
                 this.props.rootHandlers.completeTask(this.props.task.id)
             }}>
-                <div className="rounded-full w-5 h-5 border-2 border-gray mt-1">
+                <div className={`rounded-full w-5 h-5 border-2 border-gray mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none`}>
                 </div>
             </div>
         )
     }
 
     renderTaskContent() {
-        console.log(this.props)
         return (
             <input
                 className="col-span-11 text-sfRegular text-14"
@@ -75,6 +74,7 @@ class Task extends React.Component {
                 > */}
                     <DatePicker
                         task={this.props.task}
+                        listColor={this.getList().color}
                         activeTask={this.props.activeTask}
                         activeDate={this.props.activeDate}
                         listHandlers={this.props.listHandlers}

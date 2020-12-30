@@ -32,6 +32,10 @@
   font-family: "sfRounded-medium";
 }
 
+.text-15 {
+  font-size: 15px;
+}
+
 .text-14 {
   font-size: 14px;
 }
@@ -75,6 +79,10 @@ body {
   color: "#ffffff";
 }
 
+.dateButtonHover:hover {
+  padding-left: 15px; 
+}
+
 .h-lists {
   min-width: 255px;
   max-width: 255px;
@@ -85,6 +93,10 @@ body {
   /* overflow-y: scroll; */
 }
 .h-lists::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
