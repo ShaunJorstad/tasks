@@ -50,7 +50,7 @@ class TaskSection extends React.Component {
     }
 
     render() {
-        let renderedTasks = this.props.tasks.map(task =>
+        let renderedTasksWithDates = this.props.tasks.filter(task => task.due !== null).sort((a, b) => {return a.due.getTime() - b.due.getTime()}).map(task =>
             <Task
                 key={task.id}
                 lists={this.props.lists}
@@ -63,13 +63,27 @@ class TaskSection extends React.Component {
             />
         )
 
+        let renderedTasksWithoutDates = this.props.tasks.filter(task => task.due === null).sort((a, b) => {return a.order - b.order}).map(task =>
+            <Task
+                key={task.id}
+                lists={this.props.lists}
+                selectedList={this.props.selectedList}
+                task={task}
+                rootHandlers={this.props.rootHandlers}
+                listHandlers={this.props.listHandlers}
+                activeTask={this.props.activeTask}
+                activeDate={this.props.activeDate}
+            />
+        ) 
+
         return (
             <div className="w-full mb-16 section">
                 <div className="w-full grid grid-cols-12 sectionHeader">
                     {this.renderDeleteButton()}
                     {this.renderSectionTitle()}
                 </div>
-                {renderedTasks}
+                {renderedTasksWithDates}
+                {renderedTasksWithoutDates}
                 {this.renderAddTaskButton()}
             </div>
         );
