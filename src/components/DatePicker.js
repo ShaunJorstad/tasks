@@ -168,7 +168,7 @@ class DatePicker extends React.Component {
         )
         return (
             <div className={
-                `absolute wh-datepicker rounded-xl z-50 ${this.state.bottomAlign? `bottom-0`: null}`
+                `absolute wh-datepicker rounded-xl z-50 ${this.state.bottomAlign ? `bottom-0` : null}`
             }>
                 <div className={`grid grid-cols-2 pt-3 px-4`}>
                     <div className={`flex flex-col`}>

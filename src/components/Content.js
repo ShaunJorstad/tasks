@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentHeader from './ContentHeader';
 import Config from '../Config.js';
-import ListAll from './ListAll.js';
+import List from './List.js';
 
 class Content extends React.Component {
   constructor(props) {
@@ -51,22 +51,24 @@ class Content extends React.Component {
           />
         );
       case "list":
-        switch (this.state.filter) {
-          case "all":
-            return <ListAll
+        return <List
               lists={this.props.lists}
               tasks={this.props.tasks}
+              filter={this.state.filter}
               selectedList={this.props.selectedList}
               rootHandlers={this.props.rootHandlers}
             />
-          case 'today':
-            return ('today')
-          case 'upcoming':
-            return ('upcoming')
-          default:
-            return 'error'
-        }
-        return ('list');
+        // switch (this.state.filter) {
+        //   case "all":
+            
+        //   case 'today':
+        //     return ('today')
+        //   case 'upcoming':
+        //     return ('upcoming')
+        //   default:
+        //     return 'error'
+        // }
+        // return ('list');
       case "calendar":
         return ('calendar')
       default:

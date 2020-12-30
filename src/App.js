@@ -27,6 +27,7 @@ class App extends React.Component {
     this.createSection = this.createSection.bind(this)
     this.editSection = this.editSection.bind(this)
     this.deleteSection = this.deleteSection.bind(this)
+    this.batchDeleteTasks = this.batchDeleteTasks.bind(this)
 
     this.rootHandlers = {
       selectNewList: this.selectNewList,
@@ -39,7 +40,8 @@ class App extends React.Component {
       completeTask: this.completeTask,
       createSection: this.createSection,
       editSection: this.editSection,
-      deleteSection: this.deleteSection
+      deleteSection: this.deleteSection,
+      batchDeleteTasks: this.batchDeleteTasks
     }
   }
 
@@ -117,9 +119,9 @@ class App extends React.Component {
     let newSection = {
       name: '',
       id: uuidv4(),
-      order: Object.values(updatedLists[listID].sections).length +1
+      order: Object.values(updatedLists[listID].sections).length + 1
     }
-    updatedLists[listID].sections[newSection.id] = newSection 
+    updatedLists[listID].sections[newSection.id] = newSection
     this.setState({
       lists: updatedLists
     })
@@ -131,12 +133,12 @@ class App extends React.Component {
 
   editSection(listID, sectionID, changes) {
     let updateLists = this.state.lists
-    let pushChanges = {} 
+    let pushChanges = {}
     for (let key in changes) {
       updateLists[listID].sections[sectionID][key] = changes[key]
       pushChanges[`lists.${listID}.sections.${sectionID}.${key}`] = changes[key]
     }
-    this.setState({lists: updateLists})
+    this.setState({ lists: updateLists })
     db.collection('users').doc(Config.email).update(pushChanges)
   }
 
@@ -144,7 +146,7 @@ class App extends React.Component {
     let updateLists = this.state.lists
     let updateTasks = this.state.tasks
     let pushChanges = {}
-    
+
     delete updateLists[listID].sections[sectionID]
     pushChanges[`lists.${listID}.sections.${sectionID}`] = del
 
@@ -153,7 +155,18 @@ class App extends React.Component {
       pushChanges[`tasks.${task.id}`] = del
     })
 
-    this.setState({lists: updateLists, tasks: updateTasks})
+    this.setState({ lists: updateLists, tasks: updateTasks })
+    db.collection('users').doc(Config.email).update(pushChanges)
+  }
+
+  batchDeleteTasks(taskIDs) {
+    let updateTasks = this.state.tasks
+    let pushChanges = {}
+    taskIDs.forEach(taskID => {
+      delete updateTasks[taskID]
+      pushChanges[`tasks.${taskID}`] = del
+    })
+    this.setState({tasks: updateTasks})
     db.collection('users').doc(Config.email).update(pushChanges)
   }
 
@@ -167,18 +180,18 @@ class App extends React.Component {
       delete removeTasks[task.id]
       deleteList[`tasks.${task.id}`] = del
     })
-    this.setState({ lists: updateLists, tasks: removeTasks,selectedList: "59b98e7e-33be-4faa-b076-c4e9133a1bb7"})
+    this.setState({ lists: updateLists, tasks: removeTasks, selectedList: "59b98e7e-33be-4faa-b076-c4e9133a1bb7" })
     console.log(this.state.lists)
     db.collection('users').doc(Config.email).update(deleteList)
   }
 
-  createTask(listID, sectionID = null) {
+  createTask(listID, sectionID = null, due = null) {
     let newTask = {
       content: '',
-      due: null,
+      due: due,
       id: uuidv4(),
       notes: '',
-      order: Object.values(this.state.tasks).filter(task => task.listID === listID && task.sectionID === sectionID).length +1,
+      order: Object.values(this.state.tasks).filter(task => task.listID === listID && task.sectionID === sectionID).length + 1,
       listID: listID,
       sectionID: sectionID
     }
@@ -189,6 +202,9 @@ class App extends React.Component {
     })
     let pushTask = {}
     pushTask[`tasks.${newTask.id}`] = newTask
+    if (due !== null) {
+      pushTask[`tasks.${newTask.id}.due`] = Timestamp.fromDate(due)
+    }
     db.collection('users').doc(Config.email).update(pushTask)
   }
 
@@ -215,7 +231,7 @@ class App extends React.Component {
   completeTask(taskID) {
     let updateTasks = this.state.tasks
     delete updateTasks[taskID]
-    this.setState({tasks: updateTasks})
+    this.setState({ tasks: updateTasks })
     let pushChanges = {}
     pushChanges[`tasks.${taskID}`] = del
     db.collection('users').doc(Config.email).update(pushChanges)
