@@ -22,10 +22,12 @@ class Task extends React.Component {
 
     renderCheckCircle() {
         return (
-            <div className="cursor-pointer" onClick={() => {
-                this.props.rootHandlers.completeTask(this.props.task.id)
-            }}>
-                <div className={`rounded-full w-5 h-5 border-2 border-gray mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none`}>
+            <div className="cursor-pointer" >
+                <div
+                    onClick={() => {
+                        this.props.rootHandlers.completeTask(this.props.task.id)
+                    }}
+                    className={`rounded-full w-5 h-5 border-2 border-gray mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none`}>
                 </div>
             </div>
         )
@@ -39,7 +41,7 @@ class Task extends React.Component {
                 placeholder="task content"
                 value={this.props.task.content}
                 onClick={() => { this.props.listHandlers.selectNewTask(this.props.task.id) }}
-                onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, {content: val.target.value}) }} />
+                onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, { content: val.target.value }) }} />
         )
     }
 
@@ -58,7 +60,7 @@ class Task extends React.Component {
                         type='text'
                         placeholder="notes"
                         value={this.props.task.notes}
-                        onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, {notes: val.target.value}) }} />
+                        onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, { notes: val.target.value }) }} />
                 </AnimateHeight>
             </div>
 
@@ -72,14 +74,14 @@ class Task extends React.Component {
                     duration={500}
                     height={this.props.activeTask === this.props.task.id ? 'auto' : '0'}
                 > */}
-                    <DatePicker
-                        task={this.props.task}
-                        listColor={this.getList().color}
-                        activeTask={this.props.activeTask}
-                        activeDate={this.props.activeDate}
-                        listHandlers={this.props.listHandlers}
-                        rootHandlers={this.props.rootHandlers}
-                    />
+                <DatePicker
+                    task={this.props.task}
+                    listColor={this.getList().color}
+                    activeTask={this.props.activeTask}
+                    activeDate={this.props.activeDate}
+                    listHandlers={this.props.listHandlers}
+                    rootHandlers={this.props.rootHandlers}
+                />
                 {/* </AnimateHeight> */}
             </div>
         )
@@ -90,7 +92,7 @@ class Task extends React.Component {
         return (
             <div
                 className="grid grid-cols-12 w-full gap-y-2"
-                >
+            >
                 {this.renderCheckCircle()}
                 {this.renderTaskContent()}
                 <div className="h-0"></div>

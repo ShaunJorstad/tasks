@@ -25,11 +25,12 @@ class TaskSection extends React.Component {
 
     renderDeleteButton() {
         return (this.props.sectionName !== null ?
-            <div className="cursor-pointer flex justify-end"
-                onClick={() => {
-                    this.props.rootHandlers.deleteSection(this.getList().id, this.props.sectionID)
-                }}>
-                <div className={`mr-4 rounded-full w-5 h-5 border-2 border-gray mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} sectionDeleteButton opacity-0 transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none`}>
+            <div className="cursor-pointer flex justify-end">
+                <div
+                    onClick={() => {
+                        this.props.rootHandlers.deleteSection(this.getList().id, this.props.sectionID)
+                    }}
+                    className={`mr-4 rounded-full w-5 h-5 border-2 border-gray mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} sectionDeleteButton opacity-0 transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none`}>
                 </div>
             </div> : null)
     }
