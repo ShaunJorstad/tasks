@@ -5,7 +5,7 @@ class TaskSection extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            deleteHover: false
         }
     }
 
@@ -29,6 +29,12 @@ class TaskSection extends React.Component {
                 <div
                     onClick={() => {
                         this.props.rootHandlers.deleteSection(this.getList().id, this.props.sectionID)
+                    }}
+                    onMouseOver={() => {
+                        this.setState({deleteHover: true})
+                    }}
+                    onMouseOut={() => {
+                        this.setState({deleteHover: false})
                     }}
                     className={`mr-4 rounded-full w-5 h-5 border-2 border-gray mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} sectionDeleteButton opacity-0 transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none`}>
                 </div>
@@ -56,6 +62,7 @@ class TaskSection extends React.Component {
                 lists={this.props.lists}
                 selectedList={this.props.selectedList}
                 task={task}
+                deleteHover={this.state.deleteHover}
                 rootHandlers={this.props.rootHandlers}
                 listHandlers={this.props.listHandlers}
                 activeTask={this.props.activeTask}
@@ -69,6 +76,7 @@ class TaskSection extends React.Component {
                 lists={this.props.lists}
                 selectedList={this.props.selectedList}
                 task={task}
+                deleteHover={this.state.deleteHover}
                 rootHandlers={this.props.rootHandlers}
                 listHandlers={this.props.listHandlers}
                 activeTask={this.props.activeTask}

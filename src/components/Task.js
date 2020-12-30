@@ -27,7 +27,8 @@ class Task extends React.Component {
                     onClick={() => {
                         this.props.rootHandlers.completeTask(this.props.task.id)
                     }}
-                    className={`rounded-full w-5 h-5 border-2 border-gray mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none`}>
+                    className={`taskCheckCircle rounded-full w-5 h-5 border-2 mt-1 hover:bg-${this.getList().color} hover:border-${this.getList().color} transition-all duration-200 ease-in-out transform hover:scale-75 motion-reduce:transform-none
+                    ${this.props.deleteHover? `scale-75 bg-${this.getList().color} border-${this.getList().color} ` : `border-gray`}`}>
                 </div>
             </div>
         )
