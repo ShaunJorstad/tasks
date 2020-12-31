@@ -2,6 +2,8 @@ import React from 'react';
 import 'tailwindcss/tailwind.css';
 import Tile from './Tile.js';
 import ListTile from './ListTile.js';
+import LogoutIcon from '../icons/logout.svg';
+import { signout } from '../FirebaseConfig.js'
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -61,17 +63,23 @@ class NavBar extends React.Component {
               taskCount={this.getAllCount()}
               selectedList={this.props.selectedList}
               rootHandlers={this.props.rootHandlers}
-            /> 
+            />
           </div>
 
           <div className="mt-10 h-lists">
             {listTiles}
           </div>
-          <div className="flex items-center cursor-pointer">
+          <div className="grid grid-cols-2 items-center cursor-pointer">
             <p
               className="select-none place-self-center text-center pl-2 pt-4 newListButton text-gray"
               onClick={() => { this.props.rootHandlers.createList() }}
             >+ Add List</p>
+            <div className="select-none text-right pl-2 pt-4 text-gray">
+              <img
+                src={LogoutIcon} alt="logout"
+                className="float-right" 
+                onClick={() => {signout()}}/>
+            </div>
           </div>
         </div>
       </div>

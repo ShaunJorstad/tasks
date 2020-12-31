@@ -59,19 +59,13 @@ class Content extends React.Component {
               rootHandlers={this.props.rootHandlers}
             />
       case "calendar":
-        return ('calendar')
+        return ('future feature')
       default:
         return 'error'
     }
   }
 
   render() {
-    if (Object.values(this.props.lists).length === 0) {
-      return (
-        <div></div>
-      );
-    }
-
     return (
       <div className="bg-blue-200 h-full w-full">
         <div className="mx-4 w-9/10 h-full">

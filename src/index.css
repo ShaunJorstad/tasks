@@ -19,6 +19,10 @@
   font-weight: 500;
   src: url("./fonts/sfRounded/medium.otf") format("opentype");
 }
+@font-face {
+  font-family: "sfRounded-bold";
+  src: url("./fonts/sfRounded/bold.otf") format("opentype");
+}
 
 .text-sfRegular {
   font-family: "sfRounded-regular";
@@ -32,8 +36,43 @@
   font-family: "sfRounded-medium";
 }
 
+.text-sfBold {
+  font-family: "sfRounded-bold"
+}
+
+.center-self {
+  margin: 0 auto
+}
+
+.text-64 {
+  font-size: 64px
+}
+
 .text-18 {
   font-size: 22px
+}
+
+.gridBack {
+  background:linear-gradient(#D9D9D9,#D9D9D9) center/1.5px 100% no-repeat;
+}
+
+.wh-icon {
+  width: 35px;
+  height: 35px;
+}
+
+.wh-service {
+  width: 328px;
+  height: 64px;
+
+}
+
+.border-1 {
+  border-width: 1px;
+}
+
+.text-19 {
+  font-size: 19px
 }
 
 .text-15 {

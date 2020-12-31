@@ -2,9 +2,10 @@ import './App.css';
 import React from 'react';
 import NavBar from './components/NavBar.js';
 import Content from './components/Content.js';
-import { db, inc, dec, del, Timestamp } from './FirebaseConfig';
+import { db, inc, dec, del, auth, Timestamp } from './FirebaseConfig';
 import { v4 as uuidv4 } from 'uuid';
 import Config from './config.json';
+import Onboard from './components/Onboard.js';
 import 'tailwindcss/tailwind.css';
 
 class App extends React.Component {
@@ -13,9 +14,12 @@ class App extends React.Component {
     this.state = {
       selectedList: "today",
       lists: {},
-      tasks: {}
+      tasks: {},
+      user: null
     }
-    this.pullFirestoreData()
+    if (this.state.user !== null) {
+      this.pullFirestoreData()
+    }
     this.selectNewList = this.selectNewList.bind(this)
     this.getList = this.getList.bind(this)
     this.createList = this.createList.bind(this)
@@ -45,14 +49,31 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    auth.onAuthStateChanged(userAuth => {
+      this.setState({ user: userAuth });
+      this.pullFirestoreData()
+    });
+  };
+
   selectNewList(listName) {
     this.setState({
       selectedList: listName
     })
   }
 
+  createUserDocument() {
+    console.log("Creating user document")
+    db.collection('users').doc(this.state.user.email).set({
+      lists: {},
+      tasks: {}
+    }).then(() => {
+      this.pullFirestoreData()
+    })
+  }
+
   pullFirestoreData() {
-    db.collection('users').doc(Config.email).get().then((doc) => {
+    db.collection('users').doc(this.state.user.email).get().then((doc) => {
       if (doc.exists) {
         // parse the lists
         let tmpLists = {}
@@ -73,6 +94,7 @@ class App extends React.Component {
         })
       } else {
         console.log("No such document!");
+        this.createUserDocument()
       }
     }).catch(function (error) {
       console.log("Error getting document:", error);
@@ -98,7 +120,7 @@ class App extends React.Component {
     })
     let docUpdate = {}
     docUpdate[`lists.${newList.id}`] = newList
-    db.collection('users').doc(Config.email).update(docUpdate)
+    db.collection('users').doc(this.state.user.email).update(docUpdate)
   }
 
   editList(id, config) {
@@ -109,7 +131,7 @@ class App extends React.Component {
       updateLists[id][key] = config[key]
     }
     this.setState({ lists: updateLists })
-    db.collection('users').doc(Config.email).update(docChanges).catch(function (error) {
+    db.collection('users').doc(this.state.user.email).update(docChanges).catch(function (error) {
       console.log("Error getting document:", error);
     })
   }
@@ -128,7 +150,7 @@ class App extends React.Component {
 
     let pushSection = {}
     pushSection[`lists.${listID}.sections.${newSection.id}`] = newSection
-    db.collection('users').doc(Config.email).update(pushSection)
+    db.collection('users').doc(this.state.user.email).update(pushSection)
   }
 
   editSection(listID, sectionID, changes) {
@@ -139,7 +161,7 @@ class App extends React.Component {
       pushChanges[`lists.${listID}.sections.${sectionID}.${key}`] = changes[key]
     }
     this.setState({ lists: updateLists })
-    db.collection('users').doc(Config.email).update(pushChanges)
+    db.collection('users').doc(this.state.user.email).update(pushChanges)
   }
 
   deleteSection(listID, sectionID) {
@@ -156,7 +178,7 @@ class App extends React.Component {
     })
 
     this.setState({ lists: updateLists, tasks: updateTasks })
-    db.collection('users').doc(Config.email).update(pushChanges)
+    db.collection('users').doc(this.state.user.email).update(pushChanges)
   }
 
   batchDeleteTasks(taskIDs) {
@@ -167,7 +189,7 @@ class App extends React.Component {
       pushChanges[`tasks.${taskID}`] = del
     })
     this.setState({ tasks: updateTasks })
-    db.collection('users').doc(Config.email).update(pushChanges)
+    db.collection('users').doc(this.state.user.email).update(pushChanges)
   }
 
   deleteList(id) {
@@ -182,7 +204,7 @@ class App extends React.Component {
     })
     this.setState({ lists: updateLists, tasks: removeTasks, selectedList: "today" })
     console.log(this.state.lists)
-    db.collection('users').doc(Config.email).update(deleteList)
+    db.collection('users').doc(this.state.user.email).update(deleteList)
   }
 
   createTask(listID, sectionID = null, due = null) {
@@ -205,7 +227,7 @@ class App extends React.Component {
     if (due !== null) {
       pushTask[`tasks.${newTask.id}.due`] = Timestamp.fromDate(due)
     }
-    db.collection('users').doc(Config.email).update(pushTask)
+    db.collection('users').doc(this.state.user.email).update(pushTask)
   }
 
   editTask(taskID, config, final = false) {
@@ -224,7 +246,7 @@ class App extends React.Component {
         pushChanges[`tasks.${taskID}.due`] = Timestamp.fromDate(task.due)
       }
 
-      db.collection('users').doc(Config.email).update(pushChanges)
+      db.collection('users').doc(this.state.user.email).update(pushChanges)
     }
   }
 
@@ -234,10 +256,15 @@ class App extends React.Component {
     this.setState({ tasks: updateTasks })
     let pushChanges = {}
     pushChanges[`tasks.${taskID}`] = del
-    db.collection('users').doc(Config.email).update(pushChanges)
+    db.collection('users').doc(this.state.user.email).update(pushChanges)
   }
 
   render() {
+    if (this.state.user === null) {
+      return (
+        <Onboard />
+      )
+    }
     return (
       <div className="flex w-full h-screen">
         <NavBar
