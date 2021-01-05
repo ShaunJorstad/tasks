@@ -41,6 +41,7 @@ module.exports = {
       dateTomorrow: '#A36522',
       dateFuture: '#219653',
       dateExpired: '#EC4D3D',
+      noDate: '#98999B',
       pink: '#DC5558',
       purple: '#A35CD7',
       teal: '#76C7F5',
@@ -48,6 +49,7 @@ module.exports = {
       lightBlue: '#498EF1',
       gray: '#5C6269',
       lightGray: '#F4F5F5',
+      contentBackground: '#F9F9FA',
       white: '#ffffff'
     },
     extend: {

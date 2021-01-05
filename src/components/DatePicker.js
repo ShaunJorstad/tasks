@@ -127,7 +127,7 @@ class DatePicker extends React.Component {
                 return 'text-dateExpired'
             }
         } else {
-            return ('text-dateUnselected')
+            return ('text-noDate')
         }
     }
 

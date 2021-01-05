@@ -67,7 +67,7 @@ class Content extends React.Component {
 
   render() {
     return (
-      <div className="bg-blue-200 h-full w-full">
+      <div className="bg-blue-200 h-full w-full bg-contentBackground">
         <div className="mx-4 w-9/10 h-full">
           <ContentHeader
             lists={this.props.lists}

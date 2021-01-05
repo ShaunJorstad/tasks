@@ -24,6 +24,16 @@
   src: url("./fonts/sfRounded/bold.otf") format("opentype");
 }
 
+.elevate {
+  transition: all 200ms; 
+  /* box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12); */
+}
+
+.unelevate {
+  transition: all 200ms; 
+
+}
+
 .text-sfRegular {
   font-family: "sfRounded-regular";
 }

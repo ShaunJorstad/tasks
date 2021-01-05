@@ -102,16 +102,16 @@ class Onboard extends React.Component {
                     <div
                         className={`border-1 border-blue rounded-lg px-4 py-3 select-none cursor-pointer w-2/6
                             text-blue transition-all duration-200 ease-in-out text-19
-                            hover:bg-blue hover:text-white transform hover:scale-75 motion-reduce:transform-none
+                            hover:bg-blue hover:text-white transform hover:scale-90 motion-reduce:transform-none
                         `}
-                        onClick={() => { 
+                        onClick={() => {
                             if (this.state.signup.email === "") {
                                 alert("email cannot be empty")
                             } else if (this.state.signup.email !== this.state.signup.confirmEmail) {
                                 alert("emails must match")
                             } else if (this.state.signup.password === "") {
                                 alert("password cannot be empty")
-                            } else if (this.state.signup.password.length < 7 ) {
+                            } else if (this.state.signup.password.length < 7) {
                                 alert("password must be at least 7 characters")
                             } else if (this.state.signup.password !== this.state.signup.confirmPassword) {
                                 alert("passwords must match")
@@ -150,7 +150,7 @@ class Onboard extends React.Component {
                     <div
                         className={`border-1 border-blue rounded-lg px-4 py-3 select-none cursor-pointer w-2/6
                             text-blue transition-all duration-200 ease-in-out text-19
-                            hover:bg-blue hover:text-white transform hover:scale-75 motion-reduce:transform-none
+                            hover:bg-blue hover:text-white transform hover:scale-90 motion-reduce:transform-none
                         `}
                         onClick={() => { signInWithEmail(this.state.login.email, this.state.login.password) }}
                     >

@@ -23,7 +23,6 @@ class Task extends React.Component {
         if (['all', 'today', 'upcoming'].includes(this.props.selectedList)) {
             return { color: 'blue' }
         }
-        console.log(this.props.selectedList)
         return this.props.lists[this.props.selectedList]
     }
 
@@ -44,7 +43,7 @@ class Task extends React.Component {
     renderTaskContent() {
         return (
             <input
-                className="col-span-11 text-sfRegular text-14"
+                className={`col-span-11 text-sfRegular text-14  ${this.props.activeTask === this.props.task.id ? '' : 'bg-contentBackground'}`}
                 type='text'
                 placeholder="task content"
                 value={this.props.task.content}
@@ -95,11 +94,25 @@ class Task extends React.Component {
         )
     }
 
+    renderLine() {
+        if (this.props.activeTask !== this.props.task.id) {
+            return (
+                <div className="col-span-12 grid grid-cols-12">
+                    <div className="h-0"></div>
+                    <hr className={`col-span-11 opacity-10 mb-2 `} />
+                </div>
+            )
+        }
+        return null;
+    }
 
     render() {
         return (
             <div
-                className="grid grid-cols-12 w-full gap-y-2"
+                className={`
+                    grid grid-cols-12 w-full gap-y-2 rounded-2xl px-3 unelevate
+                    ${this.props.activeTask === this.props.task.id ? 'bg-white shadow-md py-2 my-3 elevate' : ''}
+                `}
             >
                 {this.renderCheckCircle()}
                 {this.renderTaskContent()}
@@ -107,11 +120,7 @@ class Task extends React.Component {
                 {this.renderNotes()}
                 <div className="h-0"></div>
                 {this.renderDate()}
-                <div className="h-0"></div>
-                <hr className={`
-                    col-span-11 opacity-10 mb-2 mt-1
-                    ${this.props.activeTask === this.props.task.id ? '' : 'mt-03'}
-                `} />
+                {this.renderLine()}
             </div>
         );
     }

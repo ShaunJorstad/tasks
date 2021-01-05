@@ -24,7 +24,7 @@ class TaskSection extends React.Component {
         if (!['all', 'today', 'upcoming'].includes(this.props.selectedList)) {
             return (this.props.sectionName !== null ?
                 <input
-                    className={`col-span-11 text-sfMedium text-18 text-${this.getList().color}`}
+                    className={`col-span-11 text-sfMedium bg-contentBackground text-18 text-${this.getList().color}`}
                     type='text'
                     placeholder="section name"
                     value={this.props.sectionName}
@@ -148,7 +148,7 @@ class TaskSection extends React.Component {
 
         return (
             <div className="w-full section">
-                <div className="sticky top-0 bg-white z-40 w-full grid grid-cols-12 sectionHeader">
+                <div className="sticky top-0 z-40 w-full grid grid-cols-12 sectionHeader">
                     {['all', 'upcoming', 'today'].includes(this.props.selectedList) ? <div></div> : this.renderDeleteButton()}
                     {this.renderSectionTitle()}
                 </div>
