@@ -4,7 +4,6 @@ import NavBar from './components/NavBar.js';
 import Content from './components/Content.js';
 import { db, inc, dec, del, auth, Timestamp } from './FirebaseConfig';
 import { v4 as uuidv4 } from 'uuid';
-import Config from './config.json';
 import Onboard from './components/Onboard.js';
 import 'tailwindcss/tailwind.css';
 
