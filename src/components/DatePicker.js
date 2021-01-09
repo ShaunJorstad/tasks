@@ -85,24 +85,23 @@ class DatePicker extends React.Component {
         }
         return (
             <div className={
-                `select-none cursor-pointer 
-                ${this.renderDateColor()}`
-            }
-                onClick={(e) => {
-                    if (e.clientY > 350) {
-                        this.setState({ bottomAlign: true })
-                    } else {
-                        this.setState({ bottomAlign: false })
-                    }
-                    let change = (this.props.activeDate === null ? this.props.task.id : null)
-                    this.props.listHandlers.expandDate(change)
-                }}
-            >
+                `select-none
+                text-${this.renderDateColor()}`
+            }>
                 <span
                     className={`text-sfRegular text-14 rounded-md 
                     transition-all duration-200 ease-in-out 
-                    dateButtonHover
+                    dateButtonHover cursor-pointer
                     `}
+                    onClick={(e) => {
+                        if (e.clientY > 350) {
+                            this.setState({ bottomAlign: true })
+                        } else {
+                            this.setState({ bottomAlign: false })
+                        }
+                        let change = (this.props.activeDate === null ? this.props.task.id : null)
+                        this.props.listHandlers.expandDate(change)
+                    }}
                 >
                     {dateString}
                 </span>
@@ -117,17 +116,17 @@ class DatePicker extends React.Component {
             let offset = this.calcDayDifference(this.props.task.due)
             if (offset >= 0) {
                 if (offset === 0) {
-                    return 'text-dateToday'
+                    return 'dateToday'
                 } else if (offset === 1) {
-                    return 'text-dateTomorrow'
+                    return 'dateTomorrow'
                 } else {
-                    return 'text-dateFuture'
+                    return 'dateFuture'
                 }
             } else {
-                return 'text-dateExpired'
+                return 'dateExpired'
             }
         } else {
-            return ('text-noDate')
+            return ('noDate')
         }
     }
 

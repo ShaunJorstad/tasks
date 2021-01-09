@@ -51,6 +51,10 @@ function signInWithEmail(email, password) {
         });
 }
 
+function liveDemo() {
+    signInWithEmail("shaunjorstad25@gmail.com", "tasksDemo")
+}
+
 const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 let inc = firebase.firestore.FieldValue.increment(1)
 let dec = firebase.firestore.FieldValue.increment(-1)
@@ -59,4 +63,4 @@ let Timestamp = firebase.firestore.Timestamp
 
 
 
-export { db, inc, dec, del, auth, signUpWithEmail, signInWithEmail, signout, signInWithGoogle, Timestamp };
+export { db, inc, dec, del, auth, signUpWithEmail, signInWithEmail, signout, signInWithGoogle, liveDemo, Timestamp };

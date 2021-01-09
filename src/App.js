@@ -111,7 +111,8 @@ class App extends React.Component {
       order: Object.values(this.state.lists).length,
       name: "new list",
       id: uuidv4(),
-      sections: {}
+      sections: {},
+      parentList: null
     }
     let currentLists = this.state.lists
     currentLists[newList.id] = newList
@@ -215,7 +216,8 @@ class App extends React.Component {
       notes: '',
       order: Object.values(this.state.tasks).filter(task => task.listID === listID && task.sectionID === sectionID).length + 1,
       listID: listID,
-      sectionID: sectionID
+      sectionID: sectionID,
+      parentTask: null
     }
     let updateTasks = this.state.tasks
     updateTasks[newTask.id] = newTask
@@ -228,6 +230,7 @@ class App extends React.Component {
       pushTask[`tasks.${newTask.id}.due`] = Timestamp.fromDate(due)
     }
     db.collection('users').doc(this.state.user.email).update(pushTask)
+    return(newTask.id)
   }
 
   editTask(taskID, config, final = false) {
@@ -253,8 +256,13 @@ class App extends React.Component {
   completeTask(taskID) {
     let updateTasks = this.state.tasks
     delete updateTasks[taskID]
-    this.setState({ tasks: updateTasks })
     let pushChanges = {}
+
+    Object.values(updateTasks).filter(task => task.parentTask === taskID).forEach(childTask => {
+      delete updateTasks[childTask.id]
+      pushChanges[`tasks.${childTask.id}`] = del
+    })
+    this.setState({ tasks: updateTasks })
     pushChanges[`tasks.${taskID}`] = del
     db.collection('users').doc(this.state.user.email).update(pushChanges)
   }

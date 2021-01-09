@@ -1,5 +1,5 @@
 import React from 'react';
-import { signInWithGoogle, signUpWithEmail, signInWithEmail } from '../FirebaseConfig';
+import { signInWithGoogle, signUpWithEmail, signInWithEmail, liveDemo } from '../FirebaseConfig';
 import InputField from './InputField.js'
 import GoogleIcon from '../icons/google.png'
 import GithubIcon from '../icons/github.png'
@@ -212,10 +212,18 @@ class Onboard extends React.Component {
         return (
             <div className="text-center mt-8 text-gray text-sfLight">
                 <p>
+                    <span className="text-blue select-none cursor-pointer" onClick={() => {
+                        liveDemo()
+                    }}>Preview App without login</span> Please note, inconsistencies may occur with the demo when more than one instance is active.
+                </p>
+                <p>
                     *By signing up, you agree to our <a className="text-blue" href="https://github.com/ShaunJorstad/tasks">Terms of Use</a> and aknowledge our <a className="text-blue" href="https://github.com/ShaunJorstad/tasks">Privacy Policy</a>
                 </p>
                 <p>Learn about this app and view the source code on <a className="text-blue" href="https://github.com/ShaunJorstad/tasks">Github</a></p>
                 <p>Buy the developers a coffee  <a href="https://paypal.me/ShaunJorstad?locale.x=en_US" className="text-blue">{'<3'}</a></p>
+                <p>
+                    <a className="text-blue" href="https://shaunjorstad.typeform.com/to/BOj8aApg">Contact Us</a>
+                </p>
             </div>
         )
     }

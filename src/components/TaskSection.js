@@ -16,7 +16,6 @@ class TaskSection extends React.Component {
         if (['all', 'today', 'upcoming'].includes(this.props.selectedList)) {
             return { color: 'blue' }
         }
-        console.log(this.props.selectedList)
         return this.props.lists[this.props.selectedList]
     }
 
@@ -54,7 +53,7 @@ class TaskSection extends React.Component {
                         this.setState({ deleteHover: false })
                     }}
                     className={`sectionDeleteButton mr-4 rounded-full w-5 h-5 border-2 border-gray mt-1 
-                    ${this.props.filter === "upcoming" ? null : `hover:bg-${this.getList().color} hover:border-${this.getList().color}   transform hover:scale-75 motion-reduce:transform-none`} opacity-0 transition-all duration-200 ease-in-out`}>
+                    ${this.props.filter === "upcoming" ? null : `hover:bg-${this.getList().color} hover:border-${this.getList().color}   transform hover:scale-75 motion-reduce:transform-none`} opacity-0 transition-all duration-100 ease-in-out`}>
                 </div>
             </div> : <div className=""></div>)
     }
@@ -76,30 +75,30 @@ class TaskSection extends React.Component {
                 onClick={() => {
                     switch (this.props.selectedList) {
                         case ("all"):
-                            this.props.rootHandlers.createTask(this.props.listID, null, null)
+                            this.props.listHandlers.selectNewTask(this.props.rootHandlers.createTask(this.props.listID, null, null))
                             break
                         case ("today"):
-                            this.props.rootHandlers.createTask(this.props.listID, null, this.generateDateFromToday(0))
+                            this.props.listHandlers.selectNewTask(this.props.rootHandlers.createTask(this.props.listID, null, this.generateDateFromToday(0)))
                             break
                         case ("upcoming"):
-                            this.props.rootHandlers.createTask(this.props.listID, null, this.generateDateFromToday(7))
+                            this.props.listHandlers.selectNewTask(this.props.rootHandlers.createTask(this.props.listID, null, this.generateDateFromToday(7)))
                             break
                         default:
                             switch (this.props.filter) {
                                 case ("all"):
-                                    this.props.rootHandlers.createTask(this.getList().id, this.props.sectionID)
+                                    this.props.listHandlers.selectNewTask(this.props.rootHandlers.createTask(this.getList().id, this.props.sectionID))
                                     break
                                 case ("today"):
-                                    this.props.rootHandlers.createTask(
+                                    this.props.listHandlers.selectNewTask(this.props.rootHandlers.createTask(
                                         this.getList().id,
                                         this.props.sectionID,
-                                        new Date())
+                                        new Date()))
                                     break
                                 case ("upcoming"):
-                                    this.props.rootHandlers.createTask(
+                                    this.props.listHandlers.selectNewTask(this.props.rootHandlers.createTask(
                                         this.getList().id,
                                         null,
-                                        this.generateDateFromToday(this.props.offset))
+                                        this.generateDateFromToday(this.props.offset)))
                                     break
                                 default:
                                     break
@@ -109,7 +108,7 @@ class TaskSection extends React.Component {
                 <div></div>
                 <div className="col-span-11 w-full items-center cursor-pointer">
                     <p
-                        className={`select-none place-self-center text-center pl-2 pt-4 newListButton opacity-0 sectionTaskButton transition-all duration-200 ease-in-out`}
+                        className={`select-none place-self-center text-center pl-2 pt-4 newListButton opacity-0 sectionTaskButton transition-all duration-100 ease-in-out`}
 
                     >+ Add Task</p>
                 </div>
@@ -117,13 +116,22 @@ class TaskSection extends React.Component {
         )
     }
 
+    getTaskChildren(id) {
+        let children = Object.values(this.props.tasks).filter(task => task.parentTask === id).sort((a, b) => a.order - b.order)
+        if (children.length === 0 ) {
+            return []
+        }
+        return children
+    }
+
     render() {
-        let renderedTasksWithDates = this.props.tasks.filter(task => task.due !== null).sort((a, b) => { return a.due.getTime() - b.due.getTime() }).map(task =>
+        let renderedTasksWithDates = this.props.tasks.filter(task => task.due !== null && task.parentTask === null).sort((a, b) => { return a.due.getTime() - b.due.getTime() }).map(task =>
             <Task
                 key={task.id}
                 lists={this.props.lists}
                 selectedList={this.props.selectedList}
                 task={task}
+                children={this.getTaskChildren(task.id)}
                 deleteHover={this.state.deleteHover}
                 rootHandlers={this.props.rootHandlers}
                 listHandlers={this.props.listHandlers}
@@ -132,12 +140,13 @@ class TaskSection extends React.Component {
             />
         )
 
-        let renderedTasksWithoutDates = this.props.tasks.filter(task => task.due === null).sort((a, b) => { return a.order - b.order }).map(task =>
+        let renderedTasksWithoutDates = this.props.tasks.filter(task => task.due === null && task.parentTask === null).sort((a, b) => { return a.order - b.order }).map(task =>
             <Task
                 key={task.id}
                 lists={this.props.lists}
                 selectedList={this.props.selectedList}
                 task={task}
+                children={this.getTaskChildren(task.id)}
                 deleteHover={this.state.deleteHover}
                 rootHandlers={this.props.rootHandlers}
                 listHandlers={this.props.listHandlers}

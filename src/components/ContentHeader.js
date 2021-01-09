@@ -35,7 +35,7 @@ class ContentHeader extends React.Component {
 
     renderTitle() {
         if (['all', 'upcoming', 'today'].includes(this.props.selectedList)) {
-            return(<p className={`col-span-2 listTitle text-${this.getGlobalTitleColor()} select-none`}>{this.props.selectedList}</p>)
+            return (<p className={`col-span-2 listTitle text-${this.getGlobalTitleColor()} select-none`}>{this.props.selectedList}</p>)
         }
         return (
             <p className={`col-span-2 listTitle text-${this.getList().color} select-none`}>{this.getList().name}</p>
@@ -53,11 +53,12 @@ class ContentHeader extends React.Component {
         }
         return (
             <div className="inline-block align-middle mt-2 align-right place-self-end pr-3">
-                {this.props.view === "list" ?
+                {/* {this.props.view === "list" ?
                     <p
                         className="inline-block align-middle cursor-pointer select-none text-right addTaskButton text-gray pr-2"
-                        onClick={() => { this.props.rootHandlers.createTask(this.getList().id, null) }}>+</p> :
-                    <div></div>}
+                        onClick={() => { this.props.listHandlers.selectNewTask(this.props.rootHandlers.createTask(this.getList().id, null)) }}>+</p> :
+                    <div></div>} */}
+                <div></div>
                 <p className={`inline-block align-middle select-none text-right taskCount text-${this.getList().color}`}>
                     {Object.values(this.props.tasks).filter(task => task.listID === this.getList().id).length}
                 </p>

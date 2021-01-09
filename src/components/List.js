@@ -46,6 +46,13 @@ class List extends React.Component {
             case 27:
                 this.selectNewTask(null)
                 break
+            case 13:
+                if (this.state.activeTask !== null) {
+                    let oldSection = this.props.tasks[this.state.activeTask].sectionID
+                    let newID = this.props.rootHandlers.createTask(this.getList().id, oldSection)
+                    this.selectNewTask(newID)
+                }
+                break
             default:
                 break
         }
@@ -65,9 +72,9 @@ class List extends React.Component {
 
     getSectionTasks(sectionID, dueOffset = null) {
         if (dueOffset === null) {
-            return Object.values(this.props.tasks).filter(task => task.sectionID === sectionID).sort((a, b) => { return a.order - b.order })
+            return Object.values(this.props.tasks).filter(task => task.sectionID === sectionID ).sort((a, b) => { return a.order - b.order })
         } else {
-            return Object.values(this.props.tasks).filter(task => task.sectionID === sectionID && task.due !== null && this.calcDayDifference(task.due) === 0).sort((a, b) => { return a.order - b.order })
+            return Object.values(this.props.tasks).filter(task => task.sectionID === sectionID && task.due !== null && this.calcDayDifference(task.due) === 0 ).sort((a, b) => { return a.order - b.order })
         }
     }
 
@@ -106,7 +113,7 @@ class List extends React.Component {
     }
 
     renderAll() {
-        let defaultTasks = Object.values(this.props.tasks).filter(task => task.listID === this.getList().id && task.sectionID === null).sort((a, b) => { return a.order - b.order })
+        let defaultTasks = Object.values(this.props.tasks).filter(task => task.listID === this.getList().id && task.sectionID === null ).sort((a, b) => { return a.order - b.order })
 
         let sections = Object.values(this.getList().sections).sort((a, b) => { return a.order - b.order }).map(section =>
             <TaskSection

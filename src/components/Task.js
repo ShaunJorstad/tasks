@@ -6,13 +6,26 @@ class Task extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            textBoxHeight: 'auto'
+            textBoxHeight: 'auto',
+            childrenExpanded: false
         }
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.activeTask === prevProps.task.id && this.props.activeTask !== this.props.task.id) {
             this.props.rootHandlers.editTask(this.props.task.id, {}, true)
+        } else if (prevProps.activeTask !== prevProps.task.id && this.props.activeTask === this.props.task.id) {
+
+        }
+    }
+
+    onKeyDown(event) {
+        if (event.key === "Tab" && event.shiftKey) {
+            // shift tab
+            event.preventDefault();
+        } else if (event.key === "Tab") {
+            // tab
+            event.preventDefault();
         }
     }
 
@@ -43,12 +56,14 @@ class Task extends React.Component {
     renderTaskContent() {
         return (
             <input
+                autoFocus
                 className={`col-span-11 text-sfRegular text-14  ${this.props.activeTask === this.props.task.id ? '' : 'bg-contentBackground'}`}
                 type='text'
                 placeholder="task content"
                 value={this.props.task.content}
                 onClick={() => { this.props.listHandlers.selectNewTask(this.props.task.id) }}
-                onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, { content: val.target.value }) }} />
+                onChange={val => { this.props.rootHandlers.editTask(this.props.task.id, { content: val.target.value }) }}
+                onKeyDown={this.onKeyDown} />
         )
     }
 
@@ -106,20 +121,46 @@ class Task extends React.Component {
         return null;
     }
 
+    renderChildrenToggle() {
+        console.log(this.props.children)
+        if (this.props.children.length === 0) {
+            return (<div></div>)
+        }
+        return (
+            <div>
+                <span></span>
+            </div>
+        )
+    }
+
+    renderLeftControls() {
+        return (
+            <div className="grid grid-cols-2">
+                {this.renderCheckCircle()}
+                {this.renderChildrenToggle()}
+            </div>
+        )
+    }
+
+    renderChildren() {
+        return (<div></div>)
+    }
+
+
     render() {
         return (
             <div
                 className={`
                     grid grid-cols-12 w-full gap-y-2 rounded-2xl px-3 unelevate
                     ${this.props.activeTask === this.props.task.id ? 'bg-white shadow-md py-2 my-3 elevate' : ''}
-                `}
-            >
-                {this.renderCheckCircle()}
+                `}>
+                {this.renderLeftControls()}
                 {this.renderTaskContent()}
                 <div className="h-0"></div>
                 {this.renderNotes()}
                 <div className="h-0"></div>
                 {this.renderDate()}
+                {this.renderChildren()}
                 {this.renderLine()}
             </div>
         );
