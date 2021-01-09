@@ -168,7 +168,7 @@ class Onboard extends React.Component {
             <div className="grid">
                 <div className="place-self-center">
                     <div className={`
-                    bg-red text-white wh-service rounded-lg center-self grid grid-cols-5 select-none cursor-pointer border-2 border-red mb-6
+                    bg-red text-white wh-service rounded-lg grid grid-cols-5 select-none cursor-pointer border-2 border-red mb-6
                     hover:bg-white transition-all duration-200 ease-in-out hover:text-red 
                     transform hover:scale-95 motion-reduce:transform-none
                 `}
