@@ -18,4 +18,4 @@ jobs:
     - name: Install Packages
       run: npm install
     - name: Build page
-      run: npm run build
+      run: CI= npm run build
