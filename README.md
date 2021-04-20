@@ -1,7 +1,7 @@
 # Tasks
 Simple task application replicating feature set and design of MacOS Reminders. Additional features replicating that which exist in Things3 and Todoist are planned in the coming future. This project is built with Javascript, React, and tailwindcss. All components are custom built with a few exceptions. 
 
-This project is purely for learning purposes. 
+This project was built for learning purposes. It is a shameful clone of MacOS design & some todoist features. I built this project to learn react development. In the process I learned a lot of what I wrote is not up to spec with industry standards. Once I find time I want to refactor this to improve state manegement, readability, and maintainability. Specifically with redux or mobx state management, and refactoring components to be more intuitive and better designed. 
 
 The site is [currently hosted here](https://jorstad-tasks.netlify.app/)
 
