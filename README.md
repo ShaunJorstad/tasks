@@ -28,6 +28,11 @@ This is not at a stable release, data stored in the datastore may be wiped at an
 - Search all tasks and lists
 - Nestable Lists and tasks
 
+- Refactor to use Redux/MobX rather than prop drilling
+- Add documentation/comments
+- Separate some components out into multiple components
+- Restructure component hierarchy
+
 
 ### Known bugs
 - Completing all tasks within a section does not remove the section header
